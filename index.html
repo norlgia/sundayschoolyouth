@@ -6,7 +6,7 @@
 <title>부활 복음 탐험대 ✝️ — 어린이 복음 활동</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Jua&family=Gowun+Dodum&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Jua&family=Noto+Sans+KR:wght@500;700;900&display=swap" rel="stylesheet">
 <style>
   :root {
     --red: #e55039;
@@ -20,7 +20,7 @@
     --shadow: 0 6px 0 rgba(0,0,0,0.08);
   }
   * { margin: 0; padding: 0; box-sizing: border-box; }
-  body { font-family: 'Gowun Dodum', sans-serif; background: var(--bg); color: var(--ink); min-height: 100vh; }
+  body { font-family: 'Noto Sans KR', sans-serif; font-weight: 500; background: var(--bg); color: var(--ink); min-height: 100vh; }
   h1, h2, h3, .btn, .tab { font-family: 'Jua', sans-serif; }
 
   header {
@@ -43,8 +43,8 @@
   section.active { display: block; }
 
   .panel { background: var(--card); border-radius: 24px; padding: 22px 16px; box-shadow: var(--shadow); margin-bottom: 18px; }
-  .panel h2 { font-size: 1.35rem; margin-bottom: 10px; }
-  .hint { font-size: .95rem; color: #8a7a68; margin-bottom: 14px; line-height: 1.6; }
+  .panel h2 { font-size: 1.5rem; margin-bottom: 10px; }
+  .hint { font-size: 1.05rem; font-weight: 500; color: #7a6a58; margin-bottom: 14px; line-height: 1.6; }
 
   .btn { border: none; padding: 12px 20px; border-radius: 16px; font-size: 1.05rem; cursor: pointer; background: var(--accent); color: #fff; box-shadow: var(--shadow); }
   .btn.secondary { background: #b8b1a5; }
@@ -60,6 +60,11 @@
   .song-listen .note { font-size: 3.6rem; }
   .song-listen h3 { font-size: 1.5rem; color: #c0392b; margin: 8px 0 20px; }
   .song-listen .yt-btn { text-decoration: none; display: inline-block; background: #e55039; font-size: 1.15rem; padding: 15px 26px; color: #fff; border-radius: 16px; box-shadow: var(--shadow); }
+
+  /* ── 마지막 질문하기 ── */
+  .ask-q { display: flex; align-items: center; gap: 14px; background: #fff6ec; border: 3px solid var(--gold); border-radius: 18px; padding: 22px 18px; font-size: 1.5rem; font-weight: 700; margin-bottom: 14px; line-height: 1.5; }
+  .ask-num { flex-shrink: 0; width: 44px; height: 44px; border-radius: 50%; background: #e55039; color: #fff; font-family: 'Jua', sans-serif; display: flex; align-items: center; justify-content: center; font-size: 1.4rem; }
+  .ask-note { text-align: center; font-family: 'Jua', sans-serif; color: #c0392b; font-size: 1.3rem; margin-top: 20px; padding: 18px; background: #fffbe6; border-radius: 16px; border: 3px dashed #f0a58c; line-height: 1.5; }
 
   /* ── 부활 책자 읽기 (크게) ── */
   .book-card { border-radius: 26px; padding: 34px 28px; color: #fff; min-height: 380px; box-shadow: 0 10px 0 rgba(0,0,0,0.1); }
@@ -122,29 +127,29 @@
   .picker { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 16px; }
   .picker .btn { background: #ffe1a8; color: #6b4a1e; }
   .picker .btn.on { background: var(--gold); color: #fff; }
-  .mem-board { background: #fffaf0; border: 3px dashed var(--gold); border-radius: 18px; padding: 22px 18px; min-height: 120px; }
-  .mem-board.left { text-align: left; font-size: 1.12rem; line-height: 2; }
+  .mem-board { background: #fffaf0; border: 3px dashed var(--gold); border-radius: 18px; padding: 22px 18px; min-height: 120px; font-family: 'Jua', sans-serif; }
+  .mem-board.left { text-align: left; font-size: 1.55rem; line-height: 1.65; }
   .mem-line { display: block; }
-  .part-title { font-family: 'Jua', sans-serif; font-size: 1.05rem; color: #b08d2f; margin-bottom: 8px; text-align: center; }
-  .word { display: inline-block; margin: 0 3px; padding: 2px 6px; border-radius: 8px; }
-  .word.hidden-word { background: var(--gold); color: var(--gold); cursor: pointer; -webkit-user-select: none; user-select: none; box-shadow: inset 0 -3px 0 rgba(0,0,0,.15); }
+  .part-title { font-family: 'Jua', sans-serif; font-size: 1.3rem; color: #b08d2f; margin-bottom: 8px; text-align: center; }
+  .word { display: inline-block; margin: 0; padding: 0 1px; border-radius: 8px; }
+  .word.hidden-word { margin: 0 2px; padding: 2px 9px; background: var(--gold); color: var(--gold); cursor: pointer; -webkit-user-select: none; user-select: none; box-shadow: inset 0 -3px 0 rgba(0,0,0,.15); }
   .word.peeked { background: #ffe9b3; color: #5b3a29; }
   .mem-controls { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 16px; justify-content: center; }
   .mem-nav { display: flex; justify-content: space-between; align-items: center; margin-top: 14px; }
   .mem-progress { font-family: 'Jua', sans-serif; color: #8a7a68; }
 
   /* ── 퀴즈 ── */
-  .quiz-progress { font-size: .95rem; color: #8a7a68; margin-bottom: 10px; }
-  .quiz-q { font-size: 1.2rem; margin-bottom: 16px; line-height: 1.6; }
-  .quiz-tag { font-family: 'Jua', sans-serif; font-size: .85rem; color: #fff; background: #8e6bbf; border-radius: 999px; padding: 2px 10px; margin-right: 6px; }
+  .quiz-progress { font-size: 1.05rem; font-weight: 700; color: #8a7a68; margin-bottom: 10px; }
+  .quiz-q { font-size: 1.4rem; font-weight: 700; margin-bottom: 16px; line-height: 1.55; }
+  .quiz-tag { font-family: 'Jua', sans-serif; font-size: .9rem; color: #fff; background: #8e6bbf; border-radius: 999px; padding: 3px 11px; margin-right: 6px; }
   .quiz-opts { display: grid; gap: 10px; }
-  .quiz-opt { text-align: left; border: 3px solid #eeddd1; background: #fffdf8; border-radius: 14px; padding: 14px; font-size: 1.05rem; cursor: pointer; font-family: 'Gowun Dodum', sans-serif; color: var(--ink); }
+  .quiz-opt { text-align: left; border: 3px solid #eeddd1; background: #fffdf8; border-radius: 14px; padding: 15px; font-size: 1.22rem; font-weight: 700; cursor: pointer; font-family: 'Noto Sans KR', sans-serif; color: var(--ink); }
   .quiz-opt.correct { border-color: var(--green); background: #eafbe7; }
   .quiz-opt.wrong { border-color: var(--red); background: #fdecea; }
-  .short-input { width: 100%; padding: 13px 14px; border: 3px solid #eeddd1; border-radius: 14px; font-size: 1.15rem; font-family: 'Gowun Dodum', sans-serif; color: var(--ink); }
+  .short-input { width: 100%; padding: 14px; border: 3px solid #eeddd1; border-radius: 14px; font-size: 1.25rem; font-weight: 700; font-family: 'Noto Sans KR', sans-serif; color: var(--ink); }
   .short-input:focus { outline: none; border-color: var(--gold); }
   .quiz-actions { display: flex; gap: 10px; margin-top: 12px; }
-  .quiz-feedback { margin-top: 14px; font-size: 1.1rem; min-height: 32px; font-family: 'Jua', sans-serif; }
+  .quiz-feedback { margin-top: 14px; font-size: 1.25rem; min-height: 34px; font-family: 'Jua', sans-serif; }
   .quiz-result { text-align: center; padding: 20px 0; }
   .quiz-result .big { font-size: 3rem; }
   .quiz-result h3 { font-size: 1.5rem; margin: 10px 0; }
@@ -167,7 +172,7 @@
 
   /* ── 순서 맞추기 ── */
   .order-pool, .order-line { display: flex; flex-direction: column; gap: 10px; margin-top: 12px; }
-  .order-item { border: 3px solid #eeddd1; background: #fffdf8; border-radius: 14px; padding: 14px; font-size: 1.02rem; cursor: pointer; text-align: left; font-family: 'Gowun Dodum', sans-serif; color: var(--ink); }
+  .order-item { border: 3px solid #eeddd1; background: #fffdf8; border-radius: 14px; padding: 15px; font-size: 1.2rem; font-weight: 700; cursor: pointer; text-align: left; font-family: 'Noto Sans KR', sans-serif; color: var(--ink); }
   .order-item.placed { border-color: var(--green); background: #eafbe7; cursor: default; }
   .order-item.shake { animation: shake .35s; border-color: var(--red); }
   @keyframes shake { 0%,100% { transform: translateX(0);} 25%{transform:translateX(-6px);} 75%{transform:translateX(6px);} }
@@ -196,6 +201,7 @@
   <button class="tab" data-target="quiz">❓ 복음 퀴즈</button>
   <button class="tab" data-target="match">🃏 짝 맞추기</button>
   <button class="tab" data-target="lyrics">🎤 가사 외우기</button>
+  <button class="tab" data-target="ask">💬 마지막 질문</button>
   <button class="tab" data-target="pray">🙏 주기도문</button>
 </nav>
 
@@ -309,6 +315,17 @@
     </div>
   </section>
 
+  <!-- 마지막 질문하기 -->
+  <section id="ask">
+    <div class="panel">
+      <h2>💬 마지막 질문하기</h2>
+      <p class="hint">오늘 배운 복음을 마음에 새기며, 스스로에게 물어봐요. 그리고 나의 답을 <b>간증 종이에 직접 써 보세요!</b></p>
+      <div class="ask-q"><span class="ask-num">1</span> 예수님은 누구신가요?</div>
+      <div class="ask-q"><span class="ask-num">2</span> 예수님은 나에게 어떤 분이신가요?</div>
+      <div class="ask-note">✍️ 아래 <b>간증 종이</b>에 나의 답을 적어 봐요</div>
+    </div>
+  </section>
+
   <!-- 주기도문 -->
   <section id="pray">
     <div class="panel">
@@ -339,9 +356,10 @@
 
 <script>
 // ─────────────── 공통 유틸 ───────────────
-function celebrate() {
+function celebrate(count) {
   var emojis = ['🎉', '⭐', '💛', '🎊', '✨', '💗'];
-  for (var i = 0; i < 24; i++) {
+  var total = count || 24;
+  for (var i = 0; i < total; i++) {
     var el = document.createElement('div');
     el.className = 'confetti';
     el.textContent = emojis[i % emojis.length];
@@ -626,7 +644,7 @@ function renderQuiz() {
     var submitShort = function () {
       if (quizLocked) return;
       quizLocked = true;
-      if (shortCorrect(input.value, item.answers)) { fb.textContent = '🎉 딩동댕! 정답이에요!'; quizScore++; }
+      if (shortCorrect(input.value, item.answers)) { fb.textContent = '🎉 딩동댕! 정답이에요!'; quizScore++; celebrate(14); }
       else { fb.textContent = '아쉬워요! 정답은 "' + item.answers[0] + '" 예요 👀'; }
       input.disabled = true;
       setTimeout(advanceQuiz, 1700);
@@ -654,7 +672,7 @@ function renderQuiz() {
       quizLocked = true;
       var picked = Number(this.dataset.i);
       var fb2 = document.getElementById('quizFeedback');
-      if (picked === item.a) { this.classList.add('correct'); fb2.textContent = '🎉 딩동댕! 정답이에요!'; quizScore++; }
+      if (picked === item.a) { this.classList.add('correct'); fb2.textContent = '🎉 딩동댕! 정답이에요!'; quizScore++; celebrate(14); }
       else {
         this.classList.add('wrong');
         quizBody.querySelector('.quiz-opt[data-i="' + item.a + '"]').classList.add('correct');
