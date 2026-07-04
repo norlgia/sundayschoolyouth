@@ -58,66 +58,57 @@
 
   /* ── 기도 (여는 기도) ── */
   .pray-open {
-    text-align: center; padding: 30px 14px;
+    text-align: center; padding: 54px 14px;
     background: linear-gradient(135deg, #fff5ee, #ffe6db);
     border-radius: 22px; border: 3px dashed #f0a58c;
   }
-  .pray-open .pray-emoji { font-size: 3.6rem; }
-  .pray-open h2 { font-size: 1.7rem; color: #c0392b; margin: 10px 0 18px; }
-  .pray-open p { font-size: 1.2rem; line-height: 2.1; color: #5b4636; }
-  .pray-open b { color: #c0392b; }
+  .pray-open .pray-emoji { font-size: 4.6rem; }
+  .pray-open h2 { font-size: 2rem; color: #c0392b; margin-top: 14px; }
 
   /* ── 부활 책자 읽기 ── */
-  .book-card { border-radius: 24px; padding: 26px 22px; color: #fff; min-height: 320px; box-shadow: 0 10px 0 rgba(0,0,0,0.1); }
-  .book-card .chap { font-family: 'Jua', sans-serif; font-size: 1rem; opacity: .9; }
-  .book-card h3 { font-size: 1.45rem; margin: 6px 0 16px; line-height: 1.4; }
-  .book-card ol { list-style: none; counter-reset: pt; display: flex; flex-direction: column; gap: 12px; }
-  .book-card li { counter-increment: pt; position: relative; padding-left: 34px; font-size: 1.05rem; line-height: 1.6; }
+  .book-card { border-radius: 24px; padding: 28px 24px; color: #fff; min-height: 320px; box-shadow: 0 10px 0 rgba(0,0,0,0.1); }
+  .book-card .chap { font-family: 'Jua', sans-serif; font-size: 1.15rem; opacity: .95; }
+  .book-card h3 { font-size: 1.65rem; margin: 8px 0 18px; line-height: 1.4; text-shadow: 1px 1px 0 rgba(0,0,0,.12); }
+  .book-card ol { list-style: none; counter-reset: pt; display: flex; flex-direction: column; gap: 14px; }
+  .book-card li { counter-increment: pt; position: relative; padding-left: 40px; font-size: 1.25rem; line-height: 1.7; }
   .book-card li::before {
-    content: counter(pt); position: absolute; left: 0; top: 0; width: 24px; height: 24px;
-    background: rgba(255,255,255,0.3); border-radius: 50%; font-family: 'Jua', sans-serif; font-size: .9rem;
+    content: counter(pt); position: absolute; left: 0; top: 2px; width: 28px; height: 28px;
+    background: rgba(255,255,255,0.32); border-radius: 50%; font-family: 'Jua', sans-serif; font-size: 1rem;
     display: flex; align-items: center; justify-content: center;
   }
   .story-nav { display: flex; justify-content: space-between; align-items: center; margin-top: 16px; gap: 8px; }
   .story-dots { display: flex; gap: 6px; flex-wrap: wrap; justify-content: center; }
-  .story-dots span { width: 14px; height: 14px; border-radius: 50%; background: #ddd; display: inline-block; transition: transform .2s; }
-  .story-dots span.on { transform: scale(1.3); box-shadow: 0 0 0 2px rgba(0,0,0,.15); }
+  .story-dots span { width: 15px; height: 15px; border-radius: 50%; background: #ddd; display: inline-block; transition: transform .2s; }
+  .story-dots span.on { transform: scale(1.35); box-shadow: 0 0 0 2px rgba(0,0,0,.15); }
 
   /* ── 부활 심장 (방사형 도표) ── */
-  .heart-diagram { position: relative; width: 100%; max-width: 440px; margin: 6px auto 4px; aspect-ratio: 1; }
+  .heart-diagram { position: relative; width: 100%; max-width: 460px; margin: 6px auto 4px; aspect-ratio: 1; }
   .heart-lines { position: absolute; inset: 0; width: 100%; height: 100%; z-index: 1; }
   .heart-core {
     position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%);
-    width: 27%; aspect-ratio: 1; border-radius: 46% 46% 46% 46% / 40% 40% 60% 60%;
-    background: radial-gradient(circle at 40% 35%, #ff8a7a, #e55039);
-    display: flex; flex-direction: column; align-items: center; justify-content: center;
-    color: #fff; box-shadow: 0 5px 0 rgba(0,0,0,0.15); z-index: 2;
+    width: 25%; aspect-ratio: 1; z-index: 2; filter: drop-shadow(0 5px 0 rgba(0,0,0,.15));
   }
-  .heart-core b { font-family: 'Jua', sans-serif; font-size: clamp(1.1rem, 6vw, 1.7rem); text-shadow: 1px 1px 0 rgba(0,0,0,.15); }
+  .heart-core::before, .heart-core::after {
+    content: ''; position: absolute; top: 0; width: 50%; height: 80%;
+    background: radial-gradient(circle at 30% 30%, #ff8a7a, #e55039); border-radius: 50% 50% 0 0;
+  }
+  .heart-core::before { left: 50%; transform: rotate(-45deg); transform-origin: 0 100%; }
+  .heart-core::after { left: 0; transform: rotate(45deg); transform-origin: 100% 100%; }
   .heart-node {
-    position: absolute; transform: translate(-50%, -50%); width: 21%; aspect-ratio: 1; border-radius: 50%;
-    display: flex; align-items: center; justify-content: center; text-align: center; color: #fff;
-    font-family: 'Jua', sans-serif; font-size: clamp(.5rem, 2.5vw, .74rem); line-height: 1.15; padding: 4px;
-    cursor: pointer; box-shadow: 0 3px 0 rgba(0,0,0,0.15); z-index: 2; transition: transform .12s;
+    position: absolute; transform: translate(-50%, -50%); width: 19%; aspect-ratio: 1; border-radius: 50%;
+    display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center;
+    color: #fff; font-family: 'Jua', sans-serif; padding: 3px; box-shadow: 0 3px 0 rgba(0,0,0,0.15); z-index: 2;
   }
-  .heart-node:active { transform: translate(-50%, -50%) scale(.94); }
-  .heart-node.lit { outline: 3px solid #fff; box-shadow: 0 0 0 3px rgba(0,0,0,.12); transform: translate(-50%, -50%) scale(1.1); z-index: 3; }
-  .heart-caption {
-    text-align: center; margin: 14px auto 0; max-width: 440px; min-height: 60px;
-    background: #fffaf0; border: 3px dashed var(--gold); border-radius: 16px; padding: 14px;
-    font-size: 1.05rem; line-height: 1.6;
-  }
-  .heart-caption .cname { font-family: 'Jua', sans-serif; color: #c0392b; font-size: 1.15rem; display: block; }
-  .heart-caption .cref { color: #b08d2f; }
-  .heart-sub { text-align: center; color: #8a7a68; font-size: .95rem; line-height: 1.6; margin-top: 14px; }
+  .heart-node .nname { font-size: clamp(.46rem, 2.2vw, .7rem); line-height: 1.12; }
+  .heart-node .nref { font-size: clamp(.42rem, 1.9vw, .6rem); opacity: .95; margin-top: 1px; }
+  .heart-sub { text-align: center; color: #8a7a68; font-size: .95rem; line-height: 1.6; margin-top: 18px; }
 
   /* ── 찬양(가사 가리기) ── */
   .picker { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 16px; }
   .picker .btn { background: #ffe1a8; color: #6b4a1e; }
   .picker .btn.on { background: var(--gold); color: #fff; }
   .mem-board { background: #fffaf0; border: 3px dashed var(--gold); border-radius: 18px; padding: 22px 18px; min-height: 120px; }
-  .mem-board.left { text-align: left; font-size: 1.08rem; line-height: 2; }
-  .mem-board.center { text-align: center; font-size: 1.25rem; line-height: 2.1; }
+  .mem-board.left { text-align: left; font-size: 1.1rem; line-height: 2; }
   .mem-line { display: block; }
   .part-title { font-family: 'Jua', sans-serif; font-size: 1.05rem; color: #b08d2f; margin-bottom: 8px; text-align: center; }
   .word { display: inline-block; margin: 0 3px; padding: 2px 6px; border-radius: 8px; }
@@ -182,12 +173,12 @@
 
 <nav>
   <button class="tab active" data-target="pray-open">🙏 기도</button>
-  <button class="tab" data-target="story">📖 부활 책자 읽기</button>
   <button class="tab" data-target="song">🎵 찬양</button>
+  <button class="tab" data-target="story">📖 부활 책자 읽기</button>
   <button class="tab" data-target="heart">💗 부활 심장</button>
+  <button class="tab" data-target="order">🧩 순서 맞추기</button>
   <button class="tab" data-target="quiz">❓ 복음 퀴즈</button>
   <button class="tab" data-target="match">🃏 짝 맞추기</button>
-  <button class="tab" data-target="order">🧩 순서 맞추기</button>
   <button class="tab" data-target="pray">🙏 주기도문</button>
 </nav>
 
@@ -199,26 +190,6 @@
       <div class="pray-open">
         <div class="pray-emoji">🙏</div>
         <h2>기도로 시작해요</h2>
-        <p>하나님 아버지,<br>
-        오늘도 예수님의 부활 복음을<br>배우려고 모였어요.<br>
-        우리 마음을 활짝 열어 주시고,<br>
-        배우는 모든 말씀을<br>잘 기억하게 도와주세요.<br>
-        예수님 이름으로 기도합니다.<br>
-        <b>아멘.</b></p>
-      </div>
-    </div>
-  </section>
-
-  <!-- 부활 책자 읽기 -->
-  <section id="story">
-    <div class="panel">
-      <h2>📖 부활 책자 읽기</h2>
-      <p class="hint">부활 책자 7장을 한 장씩 넘기면서 함께 읽어요. 예수님의 <b>부활</b>이 우리가 예수님을 믿을 수 있는 증거예요!</p>
-      <div id="bookCard" class="book-card"></div>
-      <div class="story-nav">
-        <button class="btn secondary" id="storyPrev">◀ 이전</button>
-        <div class="story-dots" id="storyDots"></div>
-        <button class="btn" id="storyNext">다음 ▶</button>
       </div>
     </div>
   </section>
@@ -247,17 +218,46 @@
     </div>
   </section>
 
+  <!-- 부활 책자 읽기 -->
+  <section id="story">
+    <div class="panel">
+      <h2>📖 부활 책자 읽기</h2>
+      <p class="hint">부활 책자 7장을 한 장씩 넘기면서 함께 읽어요. 예수님의 <b>부활</b>이 우리가 예수님을 믿을 수 있는 증거예요!</p>
+      <div id="bookCard" class="book-card"></div>
+      <div class="story-nav">
+        <button class="btn secondary" id="storyPrev">◀ 이전</button>
+        <div class="story-dots" id="storyDots"></div>
+        <button class="btn" id="storyNext">다음 ▶</button>
+      </div>
+    </div>
+  </section>
+
   <!-- 부활 심장 -->
   <section id="heart">
     <div class="panel">
       <h2>💗 부활 심장</h2>
-      <p class="hint">가운데 <b>부활</b>에서 열네 가지 보화가 뻗어 나가요. 항목을 눌러 어떤 말씀에 있는지 확인해 보세요!</p>
+      <p class="hint">가운데 하트(부활)에서 열네 가지 보화가 뻗어 나가요. 각 보화가 어떤 말씀에 있는지 함께 나와 있어요!</p>
       <div class="heart-diagram" id="heartDiagram">
         <svg class="heart-lines" id="heartLines" viewBox="0 0 100 100" preserveAspectRatio="none"></svg>
-        <div class="heart-core"><b>부활</b></div>
+        <div class="heart-core"></div>
       </div>
-      <div class="heart-caption" id="heartCaption">위 항목을 눌러 자세히 보세요 💗</div>
       <p class="heart-sub">예수님의 부활을 통해 모든 성경 말씀을 믿을 수 있으며,<br>이 모든 보화를 실제로 누릴 수 있어요!</p>
+    </div>
+  </section>
+
+  <!-- 순서 맞추기 -->
+  <section id="order">
+    <div class="panel">
+      <h2>🧩 복음 순서 맞추기</h2>
+      <p class="hint">부활 책자 7장을 순서대로 차례차례 눌러 보세요!</p>
+      <div class="order-slot-label">👇 아래에서 1장부터 순서대로 누르세요</div>
+      <div class="order-pool" id="orderPool"></div>
+      <div class="order-slot-label">✅ 완성된 순서</div>
+      <div class="order-line" id="orderLine"></div>
+      <div class="order-status" id="orderStatus"></div>
+      <div style="text-align:center; margin-top:10px;">
+        <button class="btn small secondary" id="orderReset">다시 하기 🔄</button>
+      </div>
     </div>
   </section>
 
@@ -279,22 +279,6 @@
       <div class="match-status" id="matchStatus"></div>
       <div style="text-align:center; margin-top:10px;">
         <button class="btn small secondary" id="matchReset">다시 섞기 🔄</button>
-      </div>
-    </div>
-  </section>
-
-  <!-- 순서 맞추기 -->
-  <section id="order">
-    <div class="panel">
-      <h2>🧩 복음 순서 맞추기</h2>
-      <p class="hint">부활 책자 7장을 순서대로 차례차례 눌러 보세요!</p>
-      <div class="order-slot-label">👇 아래에서 1장부터 순서대로 누르세요</div>
-      <div class="order-pool" id="orderPool"></div>
-      <div class="order-slot-label">✅ 완성된 순서</div>
-      <div class="order-line" id="orderLine"></div>
-      <div class="order-status" id="orderStatus"></div>
-      <div style="text-align:center; margin-top:10px;">
-        <button class="btn small secondary" id="orderReset">다시 하기 🔄</button>
       </div>
     </div>
   </section>
@@ -382,7 +366,7 @@ function hideSome(wordLines) {
   shuffle(flat).slice(0, Math.max(1, Math.ceil(flat.length / 4))).forEach(w => w.hidden = true);
 }
 
-// ─────────────── 부활 책자 7장 ───────────────
+// ─────────────── 부활 책자 7장 (무지개색) ───────────────
 const BOOKLET = [
   { n: 1, color: '#e55039', title: '부활 – 모든 사람이 믿을 만한 증거', points: [
     '하나님께서는 모든 사람이 예수님을 믿을 수 있는 증거를 주셨어요. 그건 바로 예수님의 부활이에요!',
@@ -391,32 +375,32 @@ const BOOKLET = [
     '제자들은 예수님의 부활을 전하다가 고난을 당하고 목숨을 잃었어요.',
     '성경 예언대로 부활하신 예수님은 하나님이세요!'
   ]},
-  { n: 2, color: '#f6b93b', title: '부활로 성경의 모든 말씀을 믿는 것이다', points: [
+  { n: 2, color: '#f5820b', title: '부활로 성경의 모든 말씀을 믿는 것이다', points: [
     '성경의 모든 말씀을 믿을 수 있는 이유는 예수님께서 부활하셨기 때문이에요.',
     '부활을 통해 성경의 모든 말씀에 "아멘" 하면 하나님께서 영광을 받으세요.',
     '예수님의 부활은 하나님을 대적하는 세상적인 생각들을 무너뜨리는 강력한 무기예요.',
     '부활은 "기독교의 심장"이에요.'
   ]},
-  { n: 3, color: '#3d3d3d', title: '이 세상은 어둠이다', points: [
+  { n: 3, color: '#f7c948', textColor: '#5b3a29', title: '이 세상은 어둠이다', points: [
     '이 세상은 왜 어둠이 되었을까요?',
     '모든 사람이 아담과 똑같은 죄를 지어 마귀의 자녀가 되었어요.',
     '모든 사람이 마음에 자기가 주인 되어 사는 이 세상이 바로 "어둠"이에요.',
     '자기가 주인 된 죄의 대가는 "사망"이에요.'
   ]},
-  { n: 4, color: '#6a89cc', title: '복음', points: [
+  { n: 4, color: '#20bf6b', title: '복음', points: [
     '복음은 우리 죄를 위해서 십자가에 죽으시고 부활하신 예수님이 우리의 주인 되신 것이에요.'
   ]},
-  { n: 5, color: '#8e6bbf', title: '죄에 대하여라 함은 저희가 나를 믿지 아니함이요 (요 16:9)', points: [
+  { n: 5, color: '#3498db', title: '죄에 대하여라 함은 저희가 나를 믿지 아니함이요 (요 16:9)', points: [
     '죄는 예수님을 믿지 않는 것이에요.'
   ]},
-  { n: 6, color: '#38ada9', title: '회개하고 복음을 믿으라!', points: [
+  { n: 6, color: '#4a47c9', title: '회개하고 복음을 믿으라!', points: [
     '예수님을 믿지 않는 죄를 회개해야 구원을 얻어요.',
     '예수님을 마음에 "주인"으로 믿어야 구원을 얻어요.',
     '행위가 아닌 "믿음"으로 구원을 얻어요.',
     '회개하고 예수님을 주인으로 믿는 것은 "마음"에 믿는 것이에요.',
     '회개하고 예수님을 주인으로 믿는 것은 하나님의 선물이에요.'
   ]},
-  { n: 7, color: '#20a86b', title: '부활의 주께 굴복하라!', points: [
+  { n: 7, color: '#9b59b6', title: '부활의 주께 굴복하라!', points: [
     '회개하고 예수님을 마음에 주인으로 믿는다는 것은 예수님께 굴복하는 것이에요.',
     '회개한 사람은 마음의 주인이 "나"에서 "주(예수님)"로 바뀌어요.',
     '회개한 사람은 나를 위해 살지 않고 주를 위해 사는 사람으로 바뀌어요.',
@@ -430,6 +414,7 @@ BOOKLET.forEach(b => { const dot = document.createElement('span'); dot.style.bac
 function renderBook() {
   const b = BOOKLET[bookIdx];
   bookCard.style.background = b.color;
+  bookCard.style.color = b.textColor || '#fff';
   bookCard.innerHTML = `<div class="chap">${b.n}장</div><h3>${b.title}</h3><ol>${b.points.map(p => `<li>${p}</li>`).join('')}</ol>`;
   [...storyDots.children].forEach((d, i) => d.classList.toggle('on', i === bookIdx));
   document.getElementById('storyPrev').style.visibility = bookIdx === 0 ? 'hidden' : 'visible';
@@ -479,50 +464,42 @@ document.getElementById('songPrev').addEventListener('click', () => { songIdx = 
 document.getElementById('songNext').addEventListener('click', () => { songIdx = songIdx === SONG_PARTS.length - 1 ? 0 : songIdx + 1; renderSong(); });
 renderSong();
 
-// ─────────────── 부활 심장 (방사형 도표) ───────────────
+// ─────────────── 부활 심장 (방사형 도표, 말씀 항상 표시) ───────────────
 const TREASURES = [
-  { t: '사명', short: '사명', ref: '요 20:21' },
-  { t: '하나님의 살아계심', short: '하나님의<br>살아계심', ref: '행 2:32' },
-  { t: '천국과 지옥의 실존', short: '천국·지옥의<br>실존', ref: '눅 16:22-26' },
-  { t: '하나님이 나의 아버지', short: '나의<br>아버지', ref: '요 20:17' },
-  { t: '예수님의 주인 되심', short: '주인<br>되심', ref: '롬 14:9' },
-  { t: '죄의 권세에서 구원하심', short: '죄에서<br>구원', ref: '고전 15:17' },
-  { t: '사망의 권세에서 구원하심', short: '사망에서<br>구원', ref: '히 2:14-15' },
-  { t: '마귀의 권세에서 구원하심', short: '마귀에서<br>구원', ref: '요일 3:8' },
-  { t: '예수 부활 나도 부활', short: '나도<br>부활', ref: '요 11:25-26' },
-  { t: '옛사람의 죽음', short: '옛사람의<br>죽음', ref: '롬 6:6' },
-  { t: '하나님의 사랑을 확증', short: '사랑을<br>확증', ref: '롬 5:8' },
-  { t: '예수님과 한 생명', short: '한<br>생명', ref: '요 15:5' },
-  { t: '예수님 안에 있는 모든 보화', short: '모든<br>보화', ref: '골 2:3' },
-  { t: '모든 것을 가진 자', short: '모든 것<br>가진 자', ref: '고후 6:9-10' }
+  { name: '사명', ref: '요 20:21' },
+  { name: '살아계심', ref: '행 2:32' },
+  { name: '천국·지옥', ref: '눅 16:22-26' },
+  { name: '나의 아버지', ref: '요 20:17' },
+  { name: '주인 되심', ref: '롬 14:9' },
+  { name: '죄에서 구원', ref: '고전 15:17' },
+  { name: '사망에서 구원', ref: '히 2:14-15' },
+  { name: '마귀에서 구원', ref: '요일 3:8' },
+  { name: '나도 부활', ref: '요 11:25-26' },
+  { name: '옛사람 죽음', ref: '롬 6:6' },
+  { name: '사랑 확증', ref: '롬 5:8' },
+  { name: '한 생명', ref: '요 15:5' },
+  { name: '모든 보화', ref: '골 2:3' },
+  { name: '모든 것 가진 자', ref: '고후 6:9-10' }
 ];
-const TREASURE_COLORS = ['#e58e26','#8e6bbf','#f6b93b','#e55039','#eb2f06','#b71540','#e55039','#20bf6b','#4a69bd','#e55039','#38ada9','#78e08f','#b71540','#e58e26'];
+const TREASURE_COLORS = ['#8e6bbf','#3498db','#f6b93b','#e58e26','#e55039','#b71540','#eb2f06','#20bf6b','#4a69bd','#c0392b','#38ada9','#78e08f','#9b59b6','#e58e26'];
 const heartDiagram = document.getElementById('heartDiagram');
 const heartLines = document.getElementById('heartLines');
-const heartCaption = document.getElementById('heartCaption');
-const RADIUS = 39; // % from center
+const RADIUS = 40.5; // % from center
 TREASURES.forEach((tr, i) => {
   const angle = -Math.PI / 2 + i * (2 * Math.PI / TREASURES.length);
   const x = 50 + RADIUS * Math.cos(angle);
   const y = 50 + RADIUS * Math.sin(angle);
-  // 연결선
   const line = document.createElementNS('http://www.w3.org/2000/svg', 'line');
   line.setAttribute('x1', 50); line.setAttribute('y1', 50);
   line.setAttribute('x2', x); line.setAttribute('y2', y);
   line.setAttribute('stroke', '#e0c9bb'); line.setAttribute('stroke-width', '0.6');
   heartLines.appendChild(line);
-  // 노드
   const node = document.createElement('div');
   node.className = 'heart-node';
   node.style.left = x + '%';
   node.style.top = y + '%';
   node.style.background = TREASURE_COLORS[i % TREASURE_COLORS.length];
-  node.innerHTML = tr.short;
-  node.addEventListener('click', () => {
-    document.querySelectorAll('.heart-node').forEach(n => n.classList.remove('lit'));
-    node.classList.add('lit');
-    heartCaption.innerHTML = `<span class="cname">${tr.t}</span><span class="cref">📜 ${tr.ref}</span>`;
-  });
+  node.innerHTML = `<span class="nname">${tr.name}</span><span class="nref">${tr.ref}</span>`;
   heartDiagram.appendChild(node);
 });
 
