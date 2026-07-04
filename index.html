@@ -614,7 +614,12 @@ const QUIZ = [
   { q: '흰색(🕊️)은 무엇을 뜻할까요?', opts: ['하얀 눈사람', '죄를 용서받아 깨끗해진 마음', '흰 옷'], a: 1 },
   { q: '우리는 어떻게 구원을 받을 수 있을까요?', opts: ['착한 일을 아주 많이 해서', '공부를 잘해서', '예수님을 믿고 마음에 모셔서'], a: 2 },
   { q: '예수님을 믿으면 우리는 무엇이 될까요?', opts: ['하나님의 자녀', '유명한 사람', '슈퍼히어로'], a: 0 },
-  { q: '초록색(🌱)처럼 믿음이 자라려면 어떻게 해야 할까요?', opts: ['혼자 숨어 지내기', '기도하고 성경 읽고 예배드리기', '게임만 하기'], a: 1 }
+  { q: '초록색(🌱)처럼 믿음이 자라려면 어떻게 해야 할까요?', opts: ['혼자 숨어 지내기', '기도하고 성경 읽고 예배드리기', '게임만 하기'], a: 1 },
+  { q: '🎵 "예수는 역사다" — 예수님은 어느 마을에서 태어나셨나요?', opts: ['예루살렘', '베들레헴', '나사렛'], a: 1 },
+  { q: '🎵 예수님과 같은 시대에 다스렸던 로마 황제는 누구일까요?', opts: ['티베리우스', '네로', '알렉산더'], a: 0 },
+  { q: '🎵 예수님을 만져보기 전까진 못 믿겠다고 한 의심 많은 제자는?', opts: ['베드로', '요한', '도마'], a: 2 },
+  { q: '🎵 교회를 핍박하다가 예수님을 만나 위대한 사도가 된 사람은?', opts: ['다소의 사울(바울)', '가룟 유다', '삭개오'], a: 0 },
+  { q: '🎵 "예수는 역사다"에서 가장 확실한 부활의 증거는 무엇일까요?', opts: ['느낌과 감정', '수많은 목격자(증인)', '멋진 그림'], a: 1 }
 ];
 let quizIdx = 0, quizScore = 0, quizLocked = false;
 const quizBody = document.getElementById('quizBody');
@@ -622,11 +627,12 @@ const quizBody = document.getElementById('quizBody');
 function renderQuiz() {
   if (quizIdx >= QUIZ.length) {
     const perfect = quizScore === QUIZ.length;
+    const great = quizScore >= Math.ceil(QUIZ.length * 0.7);
     quizBody.innerHTML = `
       <div class="quiz-result">
-        <div class="big">${perfect ? '🏆' : quizScore >= 7 ? '🌟' : '💪'}</div>
+        <div class="big">${perfect ? '🏆' : great ? '🌟' : '💪'}</div>
         <h3>${QUIZ.length}문제 중 ${quizScore}문제 정답!</h3>
-        <p>${perfect ? '와! 복음 박사님이네요! 완벽해요!' : quizScore >= 7 ? '정말 잘했어요! 조금만 더 하면 만점!' : '괜찮아요! 복음 이야기를 다시 읽고 또 도전해 봐요!'}</p>
+        <p>${perfect ? '와! 복음 박사님이네요! 완벽해요!' : great ? '정말 잘했어요! 조금만 더 하면 만점!' : '괜찮아요! 복음 이야기를 다시 읽고 또 도전해 봐요!'}</p>
         <br>
         <button class="btn" id="quizRetry">다시 도전하기 🔄</button>
       </div>`;
