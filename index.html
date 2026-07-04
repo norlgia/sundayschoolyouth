@@ -1,0 +1,797 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>부활 복음 탐험대 ✝️ — 어린이 복음 활동</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Jua&family=Noto+Sans+KR:wght@500;700;900&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --red: #e55039;
+    --gold: #f6b93b;
+    --green: #78e08f;
+    --blue: #6a89cc;
+    --bg: #fdf3ee;
+    --ink: #4a3f35;
+    --card: #ffffff;
+    --accent: #e55039;
+    --shadow: 0 6px 0 rgba(0,0,0,0.08);
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: 'Noto Sans KR', sans-serif; font-weight: 500; background: var(--bg); color: var(--ink); min-height: 100vh; }
+  h1, h2, h3, .btn, .tab { font-family: 'Jua', sans-serif; }
+
+  header {
+    text-align: center; padding: 28px 16px 12px;
+    background: linear-gradient(135deg, #ffd3a5 0%, #ff9a8b 50%, #e55039 100%);
+    border-bottom: 6px dotted rgba(255,255,255,0.85);
+  }
+  header h1 { font-size: 1.9rem; color: #fff; text-shadow: 2px 2px 0 rgba(0,0,0,0.15); }
+  header p { margin-top: 6px; font-size: 1rem; color: #fff; text-shadow: 1px 1px 0 rgba(0,0,0,0.12); }
+
+  nav {
+    display: flex; flex-wrap: wrap; justify-content: center; gap: 8px; padding: 14px 10px;
+    position: sticky; top: 0; background: rgba(253,243,238,0.96); z-index: 10; border-bottom: 2px solid #f0ddcf;
+  }
+  .tab { border: none; background: #fff; padding: 9px 14px; border-radius: 999px; font-size: .98rem; cursor: pointer; box-shadow: var(--shadow); color: var(--ink); }
+  .tab.active { background: var(--accent); color: #fff; }
+
+  main { max-width: 860px; margin: 0 auto; padding: 20px 12px 60px; }
+  section { display: none; }
+  section.active { display: block; }
+
+  .panel { background: var(--card); border-radius: 24px; padding: 22px 16px; box-shadow: var(--shadow); margin-bottom: 18px; }
+  .panel h2 { font-size: 1.5rem; margin-bottom: 10px; }
+  .hint { font-size: 1.05rem; font-weight: 500; color: #7a6a58; margin-bottom: 14px; line-height: 1.6; }
+
+  .btn { border: none; padding: 12px 20px; border-radius: 16px; font-size: 1.05rem; cursor: pointer; background: var(--accent); color: #fff; box-shadow: var(--shadow); }
+  .btn.secondary { background: #b8b1a5; }
+  .btn.small { padding: 8px 14px; font-size: .95rem; }
+
+  /* ── 기도 ── */
+  .pray-open { text-align: center; padding: 54px 14px; background: linear-gradient(135deg, #fff5ee, #ffe6db); border-radius: 22px; border: 3px dashed #f0a58c; }
+  .pray-open .pray-emoji { font-size: 4.6rem; }
+  .pray-open h2 { font-size: 2rem; color: #c0392b; margin-top: 14px; }
+
+  /* ── 찬양 듣기 ── */
+  .song-listen { text-align: center; padding: 40px 14px; background: linear-gradient(135deg, #fff5ee, #ffe0d6); border-radius: 22px; border: 3px dashed #f0a58c; }
+  .song-listen .note { font-size: 3.6rem; }
+  .song-listen h3 { font-size: 1.5rem; color: #c0392b; margin: 8px 0 20px; }
+  .song-listen .yt-btn { text-decoration: none; display: inline-block; background: #e55039; font-size: 1.15rem; padding: 15px 26px; color: #fff; border-radius: 16px; box-shadow: var(--shadow); }
+
+  /* ── 마지막 질문하기 ── */
+  .ask-q { display: flex; align-items: center; gap: 14px; background: #fff6ec; border: 3px solid var(--gold); border-radius: 18px; padding: 22px 18px; font-size: 1.5rem; font-weight: 700; margin-bottom: 14px; line-height: 1.5; }
+  .ask-num { flex-shrink: 0; width: 44px; height: 44px; border-radius: 50%; background: #e55039; color: #fff; font-family: 'Jua', sans-serif; display: flex; align-items: center; justify-content: center; font-size: 1.4rem; }
+  .ask-note { text-align: center; font-family: 'Jua', sans-serif; color: #c0392b; font-size: 1.3rem; margin-top: 20px; padding: 18px; background: #fffbe6; border-radius: 16px; border: 3px dashed #f0a58c; line-height: 1.5; }
+
+  /* ── 부활 책자 읽기 (크게) ── */
+  .book-card { border-radius: 26px; padding: 34px 28px; color: #fff; min-height: 380px; box-shadow: 0 10px 0 rgba(0,0,0,0.1); }
+  .book-card .chap { font-family: 'Jua', sans-serif; font-size: 1.3rem; opacity: .95; }
+  .book-card h3 { font-size: 1.9rem; margin: 8px 0 22px; line-height: 1.4; text-shadow: 1px 1px 0 rgba(0,0,0,.12); }
+  .book-card ol { list-style: none; counter-reset: pt; }
+  .book-card li { counter-increment: pt; position: relative; padding-left: 46px; font-size: 1.42rem; line-height: 1.8; margin-bottom: 20px; }
+  .book-card li:last-child { margin-bottom: 0; }
+  .book-card li b { text-shadow: 0 1px 0 rgba(0,0,0,.18); }
+  .book-card li::before {
+    content: counter(pt); position: absolute; left: 0; top: 2px; width: 32px; height: 32px;
+    background: rgba(255,255,255,0.32); border-radius: 50%; font-family: 'Jua', sans-serif; font-size: 1.1rem;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .story-nav { display: flex; justify-content: space-between; align-items: center; margin-top: 16px; gap: 8px; }
+  .story-dots { display: flex; gap: 6px; flex-wrap: wrap; justify-content: center; }
+  .story-dots span { width: 15px; height: 15px; border-radius: 50%; background: #ddd; display: inline-block; }
+  .story-dots span.on { transform: scale(1.35); box-shadow: 0 0 0 2px rgba(0,0,0,.15); }
+
+  /* ── 부활 심장 (방사형 도표) ── */
+  .heart-diagram { position: relative; width: 100%; max-width: 540px; margin: 6px auto 0; }
+  .heart-lines { position: absolute; inset: 0; width: 100%; height: 100%; z-index: 1; }
+  .heart-core {
+    position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%);
+    width: 27%; height: 27%; z-index: 2;
+  }
+  .heart-core::before, .heart-core::after {
+    content: ''; position: absolute; top: 6%; width: 50%; height: 72%;
+    background: radial-gradient(circle at 32% 30%, #ff8a7a, #e55039); border-radius: 50% 50% 0 0;
+    box-shadow: 0 4px 3px rgba(0,0,0,.12);
+  }
+  .heart-core::before { left: 50%; transform: rotate(-45deg); transform-origin: 0 100%; }
+  .heart-core::after { left: 0; transform: rotate(45deg); transform-origin: 100% 100%; }
+  .heart-core b {
+    position: absolute; inset: 0; display: flex; align-items: center; justify-content: center;
+    color: #fff; font-family: 'Jua', sans-serif; font-size: clamp(1rem, 5.5vw, 1.8rem);
+    text-shadow: 1px 1px 0 rgba(0,0,0,.2); z-index: 2; padding-bottom: 12%;
+  }
+  .heart-node {
+    position: absolute; transform: translate(-50%, -50%); width: 21%; height: 21%; border-radius: 50%;
+    display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center;
+    color: #fff; font-family: 'Jua', sans-serif; padding: 2px; box-shadow: 0 3px 0 rgba(0,0,0,0.15); z-index: 2; cursor: pointer;
+    overflow: hidden;
+  }
+  .heart-node.lit { outline: 3px solid #fff; box-shadow: 0 0 0 3px rgba(0,0,0,.15); }
+  .heart-node .nname { font-size: clamp(.4rem, 1.85vw, .64rem); line-height: 1.1; }
+  .heart-node .nref { font-size: clamp(.38rem, 1.6vw, .54rem); opacity: .95; margin-top: 1px; }
+  .heart-sub { text-align: center; color: #8a7a68; font-size: .95rem; line-height: 1.6; margin-top: 18px; }
+
+  /* ── 말씀 모달 ── */
+  .modal-overlay { position: fixed; inset: 0; background: rgba(0,0,0,.55); display: none; align-items: center; justify-content: center; z-index: 200; padding: 20px; }
+  .modal-overlay.show { display: flex; }
+  .modal-card { background: #fffaf0; border: 3px solid var(--gold); border-radius: 22px; padding: 26px 22px 24px; max-width: 540px; width: 100%; max-height: 82vh; overflow-y: auto; box-shadow: 0 14px 40px rgba(0,0,0,.35); position: relative; }
+  .modal-card .m-close { position: absolute; top: 10px; right: 14px; border: none; background: none; font-size: 1.7rem; cursor: pointer; color: #c0392b; font-family: 'Jua', sans-serif; line-height: 1; }
+  .modal-card .m-name { font-family: 'Jua', sans-serif; color: #c0392b; font-size: 1.55rem; margin-bottom: 6px; padding-right: 32px; }
+  .modal-card .m-ref { color: #b08d2f; font-size: 1.1rem; margin-bottom: 16px; }
+  .modal-card .m-text { font-size: 1.2rem; line-height: 1.95; color: #4a3f35; }
+
+  /* ── 가사/주기도문(단어 가리기) ── */
+  .picker { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 16px; }
+  .picker .btn { background: #ffe1a8; color: #6b4a1e; }
+  .picker .btn.on { background: var(--gold); color: #fff; }
+  .mem-board { background: #fffaf0; border: 3px dashed var(--gold); border-radius: 18px; padding: 22px 18px; min-height: 120px; font-family: 'Jua', sans-serif; }
+  .mem-board.left { text-align: left; font-size: 1.55rem; line-height: 1.65; }
+  .mem-line { display: block; }
+  .part-title { font-family: 'Jua', sans-serif; font-size: 1.3rem; color: #b08d2f; margin-bottom: 8px; text-align: center; }
+  .word { display: inline-block; margin: 0; padding: 0 1px; border-radius: 8px; }
+  .word.hidden-word { margin: 0 2px; padding: 2px 9px; background: var(--gold); color: var(--gold); cursor: pointer; -webkit-user-select: none; user-select: none; box-shadow: inset 0 -3px 0 rgba(0,0,0,.15); }
+  .word.peeked { background: #ffe9b3; color: #5b3a29; }
+  .mem-controls { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 16px; justify-content: center; }
+  .mem-nav { display: flex; justify-content: space-between; align-items: center; margin-top: 14px; }
+  .mem-progress { font-family: 'Jua', sans-serif; color: #8a7a68; }
+
+  /* ── 퀴즈 ── */
+  .quiz-progress { font-size: 1.05rem; font-weight: 700; color: #8a7a68; margin-bottom: 10px; }
+  .quiz-q { font-size: 1.4rem; font-weight: 700; margin-bottom: 16px; line-height: 1.55; }
+  .quiz-tag { font-family: 'Jua', sans-serif; font-size: .9rem; color: #fff; background: #8e6bbf; border-radius: 999px; padding: 3px 11px; margin-right: 6px; }
+  .quiz-opts { display: grid; gap: 10px; }
+  .quiz-opt { text-align: left; border: 3px solid #eeddd1; background: #fffdf8; border-radius: 14px; padding: 15px; font-size: 1.22rem; font-weight: 700; cursor: pointer; font-family: 'Noto Sans KR', sans-serif; color: var(--ink); }
+  .quiz-opt.correct { border-color: var(--green); background: #eafbe7; }
+  .quiz-opt.wrong { border-color: var(--red); background: #fdecea; }
+  .short-input { width: 100%; padding: 14px; border: 3px solid #eeddd1; border-radius: 14px; font-size: 1.25rem; font-weight: 700; font-family: 'Noto Sans KR', sans-serif; color: var(--ink); }
+  .short-input:focus { outline: none; border-color: var(--gold); }
+  .quiz-actions { display: flex; gap: 10px; margin-top: 12px; }
+  .quiz-feedback { margin-top: 14px; font-size: 1.25rem; min-height: 34px; font-family: 'Jua', sans-serif; }
+  .quiz-result { text-align: center; padding: 20px 0; }
+  .quiz-result .big { font-size: 3rem; }
+  .quiz-result h3 { font-size: 1.5rem; margin: 10px 0; }
+
+  /* ── 짝 맞추기 (크게) ── */
+  .match-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; }
+  @media (min-width: 900px) { .match-grid { grid-template-columns: repeat(3, 1fr); } }
+  .match-card {
+    min-height: 158px; border-radius: 16px; border: 3px solid transparent; cursor: pointer; padding: 12px;
+    display: flex; align-items: center; justify-content: center; text-align: center; font-family: 'Jua', sans-serif; line-height: 1.45;
+    background: repeating-linear-gradient(45deg, #e55039, #e55039 12px, #f0684f 12px, #f0684f 24px); color: #fff; font-size: 2.4rem;
+  }
+  .match-card .mface-front { display: none; font-size: 1.08rem; }
+  .match-card.flipped { background: #fffdf8; border-color: #eeddd1; color: var(--ink); font-size: 1.3rem; }
+  .match-card.flipped .mface-back { display: none; }
+  .match-card.flipped .mface-front { display: block; }
+  .match-card.done { background: #eafbe7; border-color: var(--green); color: var(--ink); pointer-events: none; }
+  .match-card .mref { display: block; color: #c0392b; margin-bottom: 5px; font-size: 1.05rem; }
+  .match-status { margin-top: 14px; text-align: center; font-family: 'Jua', sans-serif; font-size: 1.15rem; min-height: 28px; }
+
+  /* ── 순서 맞추기 ── */
+  .order-pool, .order-line { display: flex; flex-direction: column; gap: 10px; margin-top: 12px; }
+  .order-item { border: 3px solid #eeddd1; background: #fffdf8; border-radius: 14px; padding: 15px; font-size: 1.2rem; font-weight: 700; cursor: pointer; text-align: left; font-family: 'Noto Sans KR', sans-serif; color: var(--ink); }
+  .order-item.placed { border-color: var(--green); background: #eafbe7; cursor: default; }
+  .order-item.shake { animation: shake .35s; border-color: var(--red); }
+  @keyframes shake { 0%,100% { transform: translateX(0);} 25%{transform:translateX(-6px);} 75%{transform:translateX(6px);} }
+  .order-slot-label { font-family: 'Jua', sans-serif; color: #8a7a68; margin-top: 18px; }
+  .order-status { margin-top: 14px; text-align: center; font-family: 'Jua', sans-serif; font-size: 1.1rem; min-height: 28px; }
+
+  .confetti { position: fixed; top: -20px; font-size: 1.4rem; animation: fall linear forwards; z-index: 99; pointer-events: none; }
+  @keyframes fall { to { transform: translateY(110vh) rotate(720deg); } }
+
+  footer { text-align: center; padding: 20px; color: #b0a494; font-size: .9rem; line-height: 1.6; }
+</style>
+</head>
+<body>
+
+<header>
+  <h1>✝️ 부활 복음 탐험대 🌟</h1>
+  <p>예수님의 부활로 배우는 참된 복음!</p>
+</header>
+
+<nav>
+  <button class="tab active" data-target="pray-open">🙏 기도</button>
+  <button class="tab" data-target="song">🎵 찬양</button>
+  <button class="tab" data-target="story">📖 부활 책자 읽기</button>
+  <button class="tab" data-target="heart">💗 부활 심장</button>
+  <button class="tab" data-target="order">🧩 순서 맞추기</button>
+  <button class="tab" data-target="quiz">❓ 복음 퀴즈</button>
+  <button class="tab" data-target="match">🃏 짝 맞추기</button>
+  <button class="tab" data-target="lyrics">🎤 가사 외우기</button>
+  <button class="tab" data-target="ask">💬 마지막 질문</button>
+  <button class="tab" data-target="pray">🙏 주기도문</button>
+</nav>
+
+<main>
+
+  <!-- 기도 -->
+  <section id="pray-open" class="active">
+    <div class="panel">
+      <div class="pray-open">
+        <div class="pray-emoji">🙏</div>
+        <h2>기도로 시작해요</h2>
+      </div>
+    </div>
+  </section>
+
+  <!-- 찬양 (듣기만) -->
+  <section id="song">
+    <div class="panel">
+      <h2>🎵 찬양 — 예수는 역사다</h2>
+      <p class="hint">예수님이 진짜 역사 속 인물이라는 걸 노래로 배워요. 아래 버튼으로 영상을 틀고 다 함께 불러 봐요!</p>
+      <div class="song-listen">
+        <div class="note">🎶</div>
+        <h3>예수는 역사다</h3>
+        <a class="yt-btn" href="https://youtu.be/rwkXiLz0D3w" target="_blank" rel="noopener">▶ 유튜브에서 찬양 듣기</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- 부활 책자 읽기 -->
+  <section id="story">
+    <div class="panel">
+      <h2>📖 부활 책자 읽기</h2>
+      <p class="hint">부활 책자 7장을 한 장씩 넘기면서 함께 읽어요. 예수님의 <b>부활</b>이 우리가 예수님을 믿을 수 있는 증거예요!</p>
+      <div id="bookCard" class="book-card"></div>
+      <div class="story-nav">
+        <button class="btn secondary" id="storyPrev">◀ 이전</button>
+        <div class="story-dots" id="storyDots"></div>
+        <button class="btn" id="storyNext">다음 ▶</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- 부활 심장 -->
+  <section id="heart">
+    <div class="panel">
+      <h2>💗 부활 심장</h2>
+      <div class="heart-diagram" id="heartDiagram">
+        <svg class="heart-lines" id="heartLines" viewBox="0 0 100 100" preserveAspectRatio="none"></svg>
+        <div class="heart-core"><b>부활</b></div>
+      </div>
+      <p class="heart-sub">예수님의 부활을 통해 모든 성경 말씀을 믿을 수 있으며,<br>이 모든 보화를 실제로 누릴 수 있어요!</p>
+    </div>
+  </section>
+
+  <!-- 순서 맞추기 -->
+  <section id="order">
+    <div class="panel">
+      <h2>🧩 복음 순서 맞추기</h2>
+      <p class="hint">부활 책자 7장을 순서대로 차례차례 눌러 보세요!</p>
+      <div class="order-slot-label">👇 아래에서 1장부터 순서대로 누르세요</div>
+      <div class="order-pool" id="orderPool"></div>
+      <div class="order-slot-label">✅ 완성된 순서</div>
+      <div class="order-line" id="orderLine"></div>
+      <div class="order-status" id="orderStatus"></div>
+      <div style="text-align:center; margin-top:10px;">
+        <button class="btn small secondary" id="orderReset">다시 하기 🔄</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- 퀴즈 -->
+  <section id="quiz">
+    <div class="panel">
+      <h2>❓ 복음 퀴즈</h2>
+      <p class="hint">부활 책자와 찬양을 잘 기억하고 있는지 확인해 보세요! 객관식과 주관식(직접 쓰기)이 섞여 있어요.</p>
+      <div id="quizBody"></div>
+    </div>
+  </section>
+
+  <!-- 짝 맞추기 -->
+  <section id="match">
+    <div class="panel">
+      <h2>🃏 부활 심장 ↔ 말씀 짝 맞추기</h2>
+      <p class="hint">카드를 두 장씩 뒤집어서 부활의 보화와 그 말씀(주소 + 내용)을 짝지어 보세요!</p>
+      <div class="match-grid" id="matchGrid"></div>
+      <div class="match-status" id="matchStatus"></div>
+      <div style="text-align:center; margin-top:10px;">
+        <button class="btn small secondary" id="matchReset">다시 섞기 🔄</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- 가사 외우기 -->
+  <section id="lyrics">
+    <div class="panel">
+      <h2>🎤 찬양 가사 외우기</h2>
+      <p class="hint">"예수는 역사다" 가사를 한 절씩 읽고, 단어를 가려 가며 외워 봐요! 가려진 칸을 누르면 살짝 보여줘요.</p>
+      <div class="picker" id="songPicker"></div>
+      <div class="part-title" id="songPartTitle"></div>
+      <div class="mem-board left" id="songBoard"></div>
+      <div class="mem-controls">
+        <button class="btn small" id="songHideSome">단어 가리기 🙈</button>
+        <button class="btn small" id="songHideAll">전부 가리기 🙉</button>
+        <button class="btn small secondary" id="songShowAll">다시 보기 👀</button>
+      </div>
+      <div class="mem-nav">
+        <button class="btn secondary" id="songPrev">◀ 이전 절</button>
+        <div class="mem-progress" id="songProgress"></div>
+        <button class="btn" id="songNext">다음 절 ▶</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- 마지막 질문하기 -->
+  <section id="ask">
+    <div class="panel">
+      <h2>💬 마지막 질문하기</h2>
+      <p class="hint">오늘 배운 복음을 마음에 새기며, 스스로에게 물어봐요. 그리고 나의 답을 <b>간증 종이에 직접 써 보세요!</b></p>
+      <div class="ask-q"><span class="ask-num">1</span> 예수님은 누구신가요?</div>
+      <div class="ask-q"><span class="ask-num">2</span> 예수님은 나에게 어떤 분이신가요?</div>
+      <div class="ask-note">✍️ 아래 <b>간증 종이</b>에 나의 답을 적어 봐요</div>
+    </div>
+  </section>
+
+  <!-- 주기도문 -->
+  <section id="pray">
+    <div class="panel">
+      <h2>🙏 주기도문 외우기</h2>
+      <p class="hint">예수님이 가르쳐 주신 기도예요. 한 줄씩 소리 내어 읽고, 단어를 가려 가며 다 외울 때까지 도전해요!</p>
+      <div class="mem-board left" id="prayBoard"></div>
+      <div class="mem-controls">
+        <button class="btn small" id="prayHideSome">단어 가리기 🙈</button>
+        <button class="btn small" id="prayHideAll">전부 가리기 🙉</button>
+        <button class="btn small secondary" id="prayShowAll">다시 보기 👀</button>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<!-- 말씀 모달 -->
+<div class="modal-overlay" id="verseModal">
+  <div class="modal-card">
+    <button class="m-close" id="modalClose">✕</button>
+    <div class="m-name" id="modalName"></div>
+    <div class="m-ref" id="modalRef"></div>
+    <div class="m-text" id="modalText"></div>
+  </div>
+</div>
+
+<footer>주일학교 어린이들을 위한 부활 복음 활동 · 언제 어디서나 열어서 함께 해요 💛<br>부활 책자 내용을 바탕으로 만들었어요</footer>
+
+<script>
+// ─────────────── 공통 유틸 ───────────────
+function celebrate(count) {
+  var emojis = ['🎉', '⭐', '💛', '🎊', '✨', '💗'];
+  var total = count || 24;
+  for (var i = 0; i < total; i++) {
+    var el = document.createElement('div');
+    el.className = 'confetti';
+    el.textContent = emojis[i % emojis.length];
+    el.style.left = Math.random() * 100 + 'vw';
+    el.style.animationDuration = (2 + Math.random() * 2) + 's';
+    el.style.animationDelay = (Math.random() * 0.5) + 's';
+    document.body.appendChild(el);
+    (function (node) { setTimeout(function () { node.remove(); }, 5000); })(el);
+  }
+}
+function shuffle(arr) {
+  var a = arr.slice();
+  for (var i = a.length - 1; i > 0; i--) { var j = Math.floor(Math.random() * (i + 1)); var t = a[i]; a[i] = a[j]; a[j] = t; }
+  return a;
+}
+
+// ─────────────── 탭 전환 ───────────────
+var tabEls = document.querySelectorAll('.tab');
+for (var ti = 0; ti < tabEls.length; ti++) {
+  tabEls[ti].addEventListener('click', function () {
+    var all = document.querySelectorAll('.tab');
+    for (var k = 0; k < all.length; k++) all[k].classList.remove('active');
+    var secs = document.querySelectorAll('main section');
+    for (var s = 0; s < secs.length; s++) secs[s].classList.remove('active');
+    this.classList.add('active');
+    document.getElementById(this.dataset.target).classList.add('active');
+    window.scrollTo(0, 0);
+    if (this.dataset.target === 'heart') sizeHeart();
+  });
+}
+
+// 단어 가리기 공통
+function makeWords(lines) {
+  return lines.map(function (line) { return line.split(' ').map(function (w) { return { word: w, hidden: false }; }); });
+}
+function drawWords(container, wordLines, asLines) {
+  container.innerHTML = '';
+  wordLines.forEach(function (lineWords) {
+    var lineEl = document.createElement('span');
+    lineEl.className = 'mem-line';
+    lineWords.forEach(function (w) {
+      var span = document.createElement('span');
+      span.className = 'word' + (w.hidden ? ' hidden-word' : '');
+      span.textContent = w.word;
+      if (w.hidden) {
+        span.title = '살짝 보기';
+        span.addEventListener('click', function () {
+          span.classList.add('peeked'); span.classList.remove('hidden-word');
+          setTimeout(function () { if (w.hidden) { span.classList.remove('peeked'); span.classList.add('hidden-word'); } }, 1200);
+        });
+      }
+      lineEl.appendChild(span);
+      lineEl.appendChild(document.createTextNode(' '));
+    });
+    container.appendChild(lineEl);
+    if (!asLines) container.appendChild(document.createTextNode(' '));
+  });
+}
+function hideSome(wordLines) {
+  var flat = [];
+  wordLines.forEach(function (line) { line.forEach(function (w) { if (!w.hidden) flat.push(w); }); });
+  shuffle(flat).slice(0, Math.max(1, Math.ceil(flat.length / 4))).forEach(function (w) { w.hidden = true; });
+}
+
+// ─────────────── 부활 책자 7장 (무지개색, 문장별 줄바꿈·볼드) ───────────────
+var BOOKLET = [
+  { n: 1, color: '#e55039', title: '부활 – 모든 사람이 믿을 만한 증거', points: [
+    '하나님께서는 모든 사람이 예수님을 믿을 수 있는 <b>증거</b>를 주셨어요.<br>그건 바로 <b>예수님의 부활</b>이에요!',
+    '예수님이 <b>성경대로 부활</b>하셨기 때문에 예수님이 <b>하나님</b>이신 것을 믿을 수 있어요.',
+    '예수님의 제자들도 <b>부활하신 후에야</b> 예수님을 믿었어요.',
+    '제자들은 예수님의 부활을 전하다가 <b>고난을 당하고 목숨을 잃었어요.</b>',
+    '성경 예언대로 부활하신 <b>예수님은 하나님</b>이세요!'
+  ]},
+  { n: 2, color: '#f5820b', title: '부활로 성경의 모든 말씀을 믿는 것이다', points: [
+    '성경의 모든 말씀을 믿을 수 있는 이유는 <b>예수님께서 부활하셨기 때문</b>이에요.',
+    '부활을 통해 성경의 모든 말씀에 <b>"아멘"</b> 하면 하나님께서 영광을 받으세요.',
+    '예수님의 부활은 하나님을 대적하는 세상적인 생각들을 무너뜨리는 <b>강력한 무기</b>예요.',
+    '부활은 <b>"기독교의 심장"</b>이에요.'
+  ]},
+  { n: 3, color: '#f7c948', textColor: '#5b3a29', title: '이 세상은 어둠이다', points: [
+    '이 세상은 왜 <b>어둠</b>이 되었을까요?',
+    '모든 사람이 아담과 똑같은 죄를 지어 <b>마귀의 자녀</b>가 되었어요.',
+    '모든 사람이 마음에 <b>자기가 주인</b> 되어 사는 이 세상이 바로 <b>"어둠"</b>이에요.',
+    '자기가 주인 된 죄의 대가는 <b>"사망"</b>이에요.'
+  ]},
+  { n: 4, color: '#20bf6b', title: '복음', points: [
+    '복음은 우리 죄를 위해서 <b>십자가에 죽으시고 부활하신 예수님</b>이<br><b>우리의 주인</b> 되신 것이에요.'
+  ]},
+  { n: 5, color: '#3498db', title: '죄에 대하여라 함은 저희가 나를 믿지 아니함이요 (요 16:9)', points: [
+    '죄는 <b>예수님을 믿지 않는 것</b>이에요.'
+  ]},
+  { n: 6, color: '#4a47c9', title: '회개하고 복음을 믿으라!', points: [
+    '예수님을 믿지 않는 죄를 <b>회개</b>해야 구원을 얻어요.',
+    '예수님을 마음에 <b>"주인"</b>으로 믿어야 구원을 얻어요.',
+    '<b>행위가 아닌 "믿음"</b>으로 구원을 얻어요.',
+    '회개하고 예수님을 주인으로 믿는 것은 <b>"마음"에 믿는 것</b>이에요.',
+    '회개하고 예수님을 주인으로 믿는 것은 <b>하나님의 선물</b>이에요.'
+  ]},
+  { n: 7, color: '#9b59b6', title: '부활의 주께 굴복하라!', points: [
+    '회개하고 예수님을 마음에 주인으로 믿는다는 것은 <b>예수님께 굴복</b>하는 것이에요.',
+    '회개한 사람은 마음의 주인이 <b>"나"에서 "주(예수님)"로</b> 바뀌어요.',
+    '회개한 사람은 <b>나를 위해 살지 않고 주를 위해</b> 사는 사람으로 바뀌어요.',
+    '<b>예수님을 마음에 주인으로 모셔요!</b>'
+  ]}
+];
+var bookIdx = 0;
+var bookCard = document.getElementById('bookCard');
+var storyDots = document.getElementById('storyDots');
+BOOKLET.forEach(function (b) { var dot = document.createElement('span'); dot.style.background = b.color; storyDots.appendChild(dot); });
+function renderBook() {
+  var b = BOOKLET[bookIdx];
+  bookCard.style.background = b.color;
+  bookCard.style.color = b.textColor || '#fff';
+  var lis = b.points.map(function (p) { return '<li>' + p + '</li>'; }).join('');
+  bookCard.innerHTML = '<div class="chap">' + b.n + '장</div><h3>' + b.title + '</h3><ol>' + lis + '</ol>';
+  var dots = storyDots.children;
+  for (var i = 0; i < dots.length; i++) dots[i].classList.toggle('on', i === bookIdx);
+  document.getElementById('storyPrev').style.visibility = bookIdx === 0 ? 'hidden' : 'visible';
+  document.getElementById('storyNext').textContent = bookIdx === BOOKLET.length - 1 ? '처음부터 🔄' : '다음 ▶';
+}
+document.getElementById('storyPrev').addEventListener('click', function () { bookIdx = Math.max(0, bookIdx - 1); renderBook(); });
+document.getElementById('storyNext').addEventListener('click', function () { bookIdx = bookIdx === BOOKLET.length - 1 ? 0 : bookIdx + 1; renderBook(); });
+renderBook();
+
+// ─────────────── 찬양 가사: 예수는 역사다 ───────────────
+var SONG_PARTS = [
+  { title: '1. 역사적 예수', lines: ['지중해 동남쪽 이스라엘 베들레헴','B.C 4년에 태어난 역사적 예수','그 누가 아무리 신화라고 우겨도','예수는 역사다'] },
+  { title: '2. 같은 시대의 역사', lines: ['고구려의 유리왕 대무신왕 동시대','로마의 황제는 티베리우스','타키투스 연대기에 기록된 예수님','예수는 역사다'] },
+  { title: '3. 역사 연표 속 예수님', lines: ['역사 연표 중앙에 나와 있는 예수님','석가모니 소크라테스 공자 예수님','4대 성인 중 한 사람 실존 인물 예수님','예수는 역사다'] },
+  { title: '4. 부활은 증거다', lines: ['자신이 신이라고 주장했던 예수님','증거가 없으면 어떻게 믿나','사도행전 17장 31절 말씀에','부활은 증거다'] },
+  { title: '5. 베드로와 도마', lines: ['물 위를 걸었던 베드로','죽음 앞에 예수를 저주해 버렸네','의심이 많았던 도마는','만져보기 전까진 절대 못 믿네'] },
+  { title: '6. 제자들이 선택한 길', lines: ['But, 환란 고난 핍박','그들이 선택한 인생을 봐','내가 내린 결론 이것 뿐','그들이 보지 못했다면 절대 못 가 그 길을'] },
+  { title: '7. 다소의 사울', lines: ['다소의 사울 교회의 핍박자에서','대 사도의 삶','영원한 것을 보니까','돈과 명예를 버렸지 다 썩어질 거니까'] },
+  { title: '8. 오백 명의 증인', lines: ['부활한 예수를 본','수 많은 증인들은 안 꺾이는 꽃','열 두 제자를 빼고도 오백 모두 고백','Risen King My Lord and My God'] },
+  { title: '9. 부활은 역사다', lines: ['부활이 기록 된 신약성경 복음서','느낌 감정 환상을 쓰지 않았네','목격자의 증언집 사복음서 있다면','부활은 역사다'] },
+  { title: '10. 예수는 나의 주', lines: ['구약성경 예언대로 사람이 되신 하나님','성경대로 죽으시고 부활하셨네','확실한 증거 부활로 모든 말씀 믿으니','예수는 나의 주'] }
+];
+var songIdx = 0, songWords = [];
+var songPicker = document.getElementById('songPicker');
+var songBoard = document.getElementById('songBoard');
+var songPartTitle = document.getElementById('songPartTitle');
+SONG_PARTS.forEach(function (p, i) {
+  var b = document.createElement('button');
+  b.className = 'btn small' + (i === 0 ? ' on' : '');
+  b.textContent = i + 1;
+  b.addEventListener('click', function () { songIdx = i; renderSong(); });
+  songPicker.appendChild(b);
+});
+function renderSong() { songWords = makeWords(SONG_PARTS[songIdx].lines); drawSong(); }
+function drawSong() {
+  songPartTitle.textContent = '🎤 ' + SONG_PARTS[songIdx].title;
+  var kids = songPicker.children;
+  for (var j = 0; j < kids.length; j++) kids[j].classList.toggle('on', j === songIdx);
+  drawWords(songBoard, songWords, true);
+  document.getElementById('songProgress').textContent = (songIdx + 1) + ' / ' + SONG_PARTS.length + '절';
+  document.getElementById('songPrev').style.visibility = songIdx === 0 ? 'hidden' : 'visible';
+  document.getElementById('songNext').textContent = songIdx === SONG_PARTS.length - 1 ? '처음부터 🔄' : '다음 절 ▶';
+}
+document.getElementById('songHideSome').addEventListener('click', function () { hideSome(songWords); drawSong(); });
+document.getElementById('songHideAll').addEventListener('click', function () { songWords.forEach(function (l) { l.forEach(function (w) { w.hidden = true; }); }); drawSong(); });
+document.getElementById('songShowAll').addEventListener('click', function () { songWords.forEach(function (l) { l.forEach(function (w) { w.hidden = false; }); }); drawSong(); });
+document.getElementById('songPrev').addEventListener('click', function () { songIdx = Math.max(0, songIdx - 1); renderSong(); });
+document.getElementById('songNext').addEventListener('click', function () { songIdx = songIdx === SONG_PARTS.length - 1 ? 0 : songIdx + 1; renderSong(); });
+renderSong();
+
+// ─────────────── 부활 심장 (정원 · 원래 문구 · 말씀 모달) ───────────────
+var TREASURES = [
+  { name: '사명', ref: '요 20:21', text: '예수께서 또 이르시되 너희에게 평강이 있을지어다 아버지께서 나를 보내신 것 같이 나도 너희를 보내노라' },
+  { name: '하나님의 살아계심', ref: '행 2:32', text: '이 예수를 하나님이 살리신지라 우리가 다 이 일에 증인이로다' },
+  { name: '천국과 지옥의 실존', ref: '눅 16:22-26', text: '(22) 이에 그 거지가 죽어 천사들에게 받들려 아브라함의 품에 들어가고 부자도 죽어 장사되매 (23) 그가 음부에서 고통 중에 눈을 들어 멀리 아브라함과 그의 품에 있는 나사로를 보고 (24) 불러 이르되 아버지 아브라함이여 나를 긍휼히 여기사 나사로를 보내어 그 손가락 끝에 물을 찍어 내 혀를 서늘하게 하소서 내가 이 불꽃 가운데서 괴로워하나이다 (25) 아브라함이 이르되 얘 너는 살았을 때에 좋은 것을 받았고 나사로는 고난을 받았으니 이것을 기억하라 이제 그는 여기서 위로를 받고 너는 괴로움을 받느니라 (26) 그뿐 아니라 너희와 우리 사이에 큰 구렁텅이가 놓여 있어 여기서 너희에게 건너가고자 하되 갈 수 없고 거기서 우리에게 건너올 수도 없게 하였느니라' },
+  { name: '하나님이 나의 아버지', ref: '요 20:17', text: '예수께서 이르시되 나를 붙들지 말라 내가 아직 아버지께로 올라가지 아니하였노라 너는 내 형제들에게 가서 이르되 내가 내 아버지 곧 너희 아버지, 내 하나님 곧 너희 하나님께로 올라간다 하라 하시니' },
+  { name: '예수님의 주인 되심', ref: '롬 14:9', text: '이를 위하여 그리스도께서 죽었다가 다시 살아나셨으니 곧 죽은 자와 산 자의 주가 되려 하심이라' },
+  { name: '죄의 권세에서 구원하심', ref: '고전 15:17', text: '그리스도께서 다시 살아나신 일이 없으면 너희의 믿음도 헛되고 너희가 여전히 죄 가운데 있을 것이요' },
+  { name: '사망의 권세에서 구원하심', ref: '히 2:14-15', text: '(14) 자녀들은 혈과 육에 속하였으매 그도 또한 같은 모양으로 혈과 육을 함께 지니심은 죽음을 통하여 죽음의 세력을 잡은 자 곧 마귀를 멸하시며 (15) 또 죽기를 무서워하므로 한평생 매여 종 노릇 하는 모든 자들을 놓아 주려 하심이니' },
+  { name: '마귀의 권세에서 구원하심', ref: '요일 3:8', text: '죄를 짓는 자는 마귀에게 속하나니 마귀는 처음부터 범죄함이라 하나님의 아들이 나타나신 것은 마귀의 일을 멸하려 하심이라' },
+  { name: '예수 부활 나도 부활', ref: '요 11:25-26', text: '(25) 예수께서 이르시되 나는 부활이요 생명이니 나를 믿는 자는 죽어도 살겠고 (26) 무릇 살아서 나를 믿는 자는 영원히 죽지 아니하리니 이것을 네가 믿느냐' },
+  { name: '옛사람의 죽음', ref: '롬 6:6', text: '우리가 알거니와 우리의 옛 사람이 예수와 함께 십자가에 못 박힌 것은 죄의 몸이 죽어 다시는 우리가 죄에게 종 노릇 하지 아니하려 함이니' },
+  { name: '하나님의 사랑을 확증', ref: '롬 5:8', text: '우리가 아직 죄인 되었을 때에 그리스도께서 우리를 위하여 죽으심으로 하나님께서 우리에 대한 자기의 사랑을 확증하셨느니라' },
+  { name: '예수님과 한 생명', ref: '요 15:5', text: '나는 포도나무요 너희는 가지라 그가 내 안에, 내가 그 안에 거하면 사람이 열매를 많이 맺나니 나를 떠나서는 너희가 아무것도 할 수 없음이라' },
+  { name: '예수님 안에 있는 모든 보화', ref: '골 2:3', text: '그 안에는 지혜와 지식의 모든 보화가 감추어져 있느니라' },
+  { name: '모든 것을 가진 자', ref: '고후 6:9-10', text: '(9) 무명한 자 같으나 유명한 자요 죽은 자 같으나 보라 우리가 살아 있고 징계를 받는 자 같으나 죽임을 당하지 아니하고 (10) 근심하는 자 같으나 항상 기뻐하고 가난한 자 같으나 많은 사람을 부요하게 하고 아무 것도 없는 자 같으나 모든 것을 가진 자로다' }
+];
+var TREASURE_COLORS = ['#8e6bbf','#3498db','#f6b93b','#e58e26','#e55039','#b71540','#eb2f06','#20bf6b','#4a69bd','#c0392b','#38ada9','#78e08f','#9b59b6','#e58e26'];
+var heartDiagram = document.getElementById('heartDiagram');
+var heartLines = document.getElementById('heartLines');
+var verseModal = document.getElementById('verseModal');
+var modalName = document.getElementById('modalName');
+var modalRef = document.getElementById('modalRef');
+var modalText = document.getElementById('modalText');
+function openModal(tr) {
+  modalName.textContent = tr.name;
+  modalRef.textContent = '📜 ' + tr.ref;
+  modalText.textContent = '"' + tr.text + '"';
+  verseModal.classList.add('show');
+}
+function closeModal() { verseModal.classList.remove('show'); }
+document.getElementById('modalClose').addEventListener('click', closeModal);
+verseModal.addEventListener('click', function (e) { if (e.target === verseModal) closeModal(); });
+document.addEventListener('keydown', function (e) { if (e.key === 'Escape') closeModal(); });
+function sizeHeart() { var w = heartDiagram.clientWidth; if (w > 0) heartDiagram.style.height = w + 'px'; }
+var RADIUS = 40;
+TREASURES.forEach(function (tr, i) {
+  var angle = -Math.PI / 2 + i * (2 * Math.PI / TREASURES.length);
+  var x = 50 + RADIUS * Math.cos(angle);
+  var y = 50 + RADIUS * Math.sin(angle);
+  var line = document.createElementNS('http://www.w3.org/2000/svg', 'line');
+  line.setAttribute('x1', 50); line.setAttribute('y1', 50);
+  line.setAttribute('x2', x); line.setAttribute('y2', y);
+  line.setAttribute('stroke', '#e0c9bb'); line.setAttribute('stroke-width', '0.6');
+  heartLines.appendChild(line);
+  var node = document.createElement('div');
+  node.className = 'heart-node';
+  node.style.left = x + '%';
+  node.style.top = y + '%';
+  node.style.background = TREASURE_COLORS[i % TREASURE_COLORS.length];
+  node.innerHTML = '<span class="nname">' + tr.name + '</span><span class="nref">' + tr.ref + '</span>';
+  node.addEventListener('click', function () { openModal(tr); });
+  heartDiagram.appendChild(node);
+});
+window.addEventListener('resize', sizeHeart);
+sizeHeart();
+
+// ─────────────── 복음 퀴즈 (객관식 + 주관식, 20문제) ───────────────
+var QUIZ = [
+  { type: 'mc', q: '하나님이 모든 사람에게 주신, 예수님을 믿을 수 있는 증거는 무엇일까요?', opts: ['예수님의 부활', '멋진 교회 건물', '많은 돈'], a: 0 },
+  { type: 'mc', q: '성경이 말하는 "죄"는 무엇일까요?', opts: ['나쁜 행동을 하는 것', '예수님을 믿지 않는 것', '실수를 하는 것'], a: 1 },
+  { type: 'short', q: '예수님이 태어나신 마을 이름은?', answers: ['베들레헴'] },
+  { type: 'mc', q: '"기독교의 심장"이라고 불리는 것은 무엇일까요?', opts: ['사도 바울', '예수님의 부활', '십자가 목걸이'], a: 1 },
+  { type: 'mc', q: '우리는 어떻게 구원을 얻을까요?', opts: ['착한 일을 아주 많이 해서', '교회에 열심히 나가서', '예수님을 주인으로 믿음으로'], a: 2 },
+  { type: 'mc', q: '예수님의 제자들은 언제 예수님을 진짜로 믿게 되었을까요?', opts: ['태어나자마자', '예수님이 부활하신 후에', '십자가에 죽으셨을 때'], a: 1 },
+  { type: 'short', q: '자기가 주인 된 죄의 대가(값)는 "○○"입니다. ○○에 들어갈 말은?', answers: ['사망', '죽음'] },
+  { type: 'mc', q: '예수님을 마음에 "어떻게" 믿어야 구원을 얻나요?', opts: ['혼내는 분으로', '손님으로', '주인으로'], a: 2 },
+  { type: 'mc', q: '이 세상이 "어둠"이 된 이유는 무엇일까요?', opts: ['밤이 길어져서', '자기가 주인 되어 살아서', '전기가 없어서'], a: 1 },
+  { type: 'mc', q: '회개하고 예수님을 믿는 것은 무엇일까요?', opts: ['내가 스스로 결심한 것', '하나님의 선물', '부모님이 시킨 것'], a: 1 },
+  { type: 'short', q: '예수님을 하나님으로 믿을 수 있는 증거를 써 보세요.', answers: ['부활'] },
+  { type: 'mc', q: '복음은 무엇일까요?', opts: ['재미있는 옛날 이야기', '착하게 사는 방법', '죽고 부활하신 예수님이 우리의 주인 되신 것'], a: 2 },
+  { type: 'mc', q: '회개한 사람은 마음의 주인이 어떻게 바뀔까요?', opts: ["'주(예수님)'에서 '나'로", "'나'에서 '주(예수님)'로", '바뀌지 않아요'], a: 1 },
+  { type: 'mc', q: '다음 중 "복음"을 가장 바르게 설명한 것은?', opts: ['착한 일 열심히 한 사람이 천국 간다는 이야기', '예수님처럼 훌륭하게 살자는 가르침', '죽고 부활하신 예수님이 나의 주인이 되셔서 함께 사는 것'], a: 2 },
+  { type: 'short', q: '복음은 예수님이 우리의 "○○"이 되신 것입니다. ○○을 써 보세요.', answers: ['주인', '주'] },
+  { type: 'mc', q: '🎵 예수님은 어느 마을에서 태어나셨나요?', opts: ['예루살렘', '베들레헴', '나사렛'], a: 1 },
+  { type: 'mc', q: '🎵 예수님과 같은 시대에 다스렸던 로마 황제는 누구일까요?', opts: ['티베리우스', '네로', '알렉산더'], a: 0 },
+  { type: 'short', q: '🎵 만져보기 전까진 못 믿겠다고 한 의심 많은 제자의 이름을 써 보세요.', answers: ['도마'] },
+  { type: 'mc', q: '🎵 교회를 핍박하다가 예수님을 만나 위대한 사도가 된 사람은?', opts: ['다소의 사울(바울)', '가룟 유다', '삭개오'], a: 0 },
+  { type: 'mc', q: '🎵 부활한 예수님을 본 증인은 열두 제자 외에 몇 명이 더 있었나요?', opts: ['오백 명 넘게', '세 명', '아무도 없어요'], a: 0 }
+];
+var quizIdx = 0, quizScore = 0, quizLocked = false;
+var quizBody = document.getElementById('quizBody');
+function normAns(s) { return (s || '').replace(/\s+/g, '').replace(/[.,!?'"·’”]/g, '').toLowerCase(); }
+function shortCorrect(input, answers) {
+  var n = normAns(input);
+  if (!n) return false;
+  for (var i = 0; i < answers.length; i++) { var na = normAns(answers[i]); if (n === na || n.indexOf(na) !== -1) return true; }
+  return false;
+}
+function advanceQuiz() { quizIdx++; renderQuiz(); }
+function renderQuiz() {
+  if (quizIdx >= QUIZ.length) {
+    var perfect = quizScore === QUIZ.length;
+    var great = quizScore >= Math.ceil(QUIZ.length * 0.7);
+    quizBody.innerHTML =
+      '<div class="quiz-result"><div class="big">' + (perfect ? '🏆' : great ? '🌟' : '💪') + '</div>' +
+      '<h3>' + QUIZ.length + '문제 중 ' + quizScore + '문제 정답!</h3>' +
+      '<p>' + (perfect ? '와! 부활 복음 박사님이네요! 완벽해요!' : great ? '정말 잘했어요! 조금만 더 하면 만점!' : '괜찮아요! 부활 책자를 다시 읽고 또 도전해 봐요!') + '</p>' +
+      '<br><button class="btn" id="quizRetry">다시 도전하기 🔄</button></div>';
+    document.getElementById('quizRetry').addEventListener('click', function () { quizIdx = 0; quizScore = 0; renderQuiz(); });
+    if (perfect) celebrate();
+    return;
+  }
+  var item = QUIZ[quizIdx];
+  quizLocked = false;
+  var head = '<div class="quiz-progress">문제 ' + (quizIdx + 1) + ' / ' + QUIZ.length + ' · 점수 ' + quizScore + '점</div>';
+
+  if (item.type === 'short') {
+    quizBody.innerHTML = head +
+      '<div class="quiz-q"><span class="quiz-tag">✏️ 주관식</span>' + item.q + '</div>' +
+      '<input class="short-input" id="shortInput" type="text" autocomplete="off" placeholder="여기에 답을 써 보세요">' +
+      '<div class="quiz-actions"><button class="btn small" id="shortSubmit">제출하기 ✅</button>' +
+      '<button class="btn small secondary" id="shortShow">정답 보기 👀</button></div>' +
+      '<div class="quiz-feedback" id="quizFeedback"></div>';
+    var input = document.getElementById('shortInput');
+    var fb = document.getElementById('quizFeedback');
+    var submitShort = function () {
+      if (quizLocked) return;
+      quizLocked = true;
+      if (shortCorrect(input.value, item.answers)) { fb.textContent = '🎉 딩동댕! 정답이에요!'; quizScore++; celebrate(14); }
+      else { fb.textContent = '아쉬워요! 정답은 "' + item.answers[0] + '" 예요 👀'; }
+      input.disabled = true;
+      setTimeout(advanceQuiz, 1700);
+    };
+    document.getElementById('shortSubmit').addEventListener('click', submitShort);
+    document.getElementById('shortShow').addEventListener('click', function () {
+      if (quizLocked) return;
+      quizLocked = true;
+      fb.textContent = '정답은 "' + item.answers[0] + '" 예요. 꼭 기억해요! 💡';
+      input.disabled = true;
+      setTimeout(advanceQuiz, 1700);
+    });
+    input.addEventListener('keydown', function (e) { if (e.key === 'Enter') submitShort(); });
+    input.focus();
+    return;
+  }
+
+  var mark = ['①', '②', '③', '④'];
+  var opts = item.opts.map(function (o, i) { return '<button class="quiz-opt" data-i="' + i + '">' + mark[i] + ' ' + o + '</button>'; }).join('');
+  quizBody.innerHTML = head + '<div class="quiz-q">Q. ' + item.q + '</div><div class="quiz-opts">' + opts + '</div><div class="quiz-feedback" id="quizFeedback"></div>';
+  var btns = quizBody.querySelectorAll('.quiz-opt');
+  for (var bi = 0; bi < btns.length; bi++) {
+    btns[bi].addEventListener('click', function () {
+      if (quizLocked) return;
+      quizLocked = true;
+      var picked = Number(this.dataset.i);
+      var fb2 = document.getElementById('quizFeedback');
+      if (picked === item.a) { this.classList.add('correct'); fb2.textContent = '🎉 딩동댕! 정답이에요!'; quizScore++; celebrate(14); }
+      else {
+        this.classList.add('wrong');
+        quizBody.querySelector('.quiz-opt[data-i="' + item.a + '"]').classList.add('correct');
+        fb2.textContent = '아쉬워요! 정답을 눈으로 꼭 기억해 두세요 👀';
+      }
+      setTimeout(advanceQuiz, 1600);
+    });
+  }
+}
+renderQuiz();
+
+// ─────────────── 짝 맞추기 (주소 + 전체 말씀) ───────────────
+var MATCH_PAIRS = [
+  { key: 'love', name: '하나님의 사랑을 확증', ref: '롬 5:8', text: '우리가 아직 죄인 되었을 때에 그리스도께서 우리를 위하여 죽으심으로 하나님께서 우리에 대한 자기의 사랑을 확증하셨느니라' },
+  { key: 'lord', name: '예수님의 주인 되심', ref: '롬 14:9', text: '이를 위하여 그리스도께서 죽었다가 다시 살아나셨으니 곧 죽은 자와 산 자의 주가 되려 하심이라' },
+  { key: 'alive', name: '하나님의 살아계심', ref: '행 2:32', text: '이 예수를 하나님이 살리신지라 우리가 다 이 일에 증인이로다' },
+  { key: 'rise', name: '예수 부활 나도 부활', ref: '요 11:25-26', text: '나는 부활이요 생명이니 나를 믿는 자는 죽어도 살겠고 무릇 살아서 나를 믿는 자는 영원히 죽지 아니하리니' },
+  { key: 'old', name: '옛사람의 죽음', ref: '롬 6:6', text: '우리의 옛 사람이 예수와 함께 십자가에 못 박힌 것은 죄의 몸이 죽어 다시는 우리가 죄에게 종 노릇 하지 아니하려 함이니' },
+  { key: 'mission', name: '사명', ref: '요 20:21', text: '아버지께서 나를 보내신 것 같이 나도 너희를 보내노라' }
+];
+var matchGrid = document.getElementById('matchGrid');
+var matchStatus = document.getElementById('matchStatus');
+var matchFirst = null, matchLock = false, matchDone = 0;
+function buildMatch() {
+  matchFirst = null; matchLock = false; matchDone = 0; matchStatus.textContent = '';
+  var cards = [];
+  MATCH_PAIRS.forEach(function (p) {
+    cards.push({ pair: p.key, html: p.name });
+    cards.push({ pair: p.key, html: '<span class="mref">' + p.ref + '</span>' + p.text });
+  });
+  matchGrid.innerHTML = '';
+  shuffle(cards).forEach(function (c) {
+    var btn = document.createElement('button');
+    btn.className = 'match-card';
+    btn.dataset.pair = c.pair;
+    btn.innerHTML = '<span class="mface-back">❓</span><span class="mface-front">' + c.html + '</span>';
+    btn.addEventListener('click', function () { flipCard(btn); });
+    matchGrid.appendChild(btn);
+  });
+}
+function flipCard(btn) {
+  if (matchLock || btn.classList.contains('flipped') || btn.classList.contains('done')) return;
+  btn.classList.add('flipped');
+  if (!matchFirst) { matchFirst = btn; return; }
+  var a = matchFirst, b = btn;
+  matchFirst = null;
+  if (a.dataset.pair === b.dataset.pair) {
+    a.classList.add('done'); b.classList.add('done'); matchDone++;
+    matchStatus.textContent = '잘했어요! ' + matchDone + ' / ' + MATCH_PAIRS.length + ' 짝 완성 ⭐';
+    if (matchDone === MATCH_PAIRS.length) { matchStatus.textContent = '🎉 부활 심장의 보화와 말씀을 다 짝지었어요!'; celebrate(); }
+  } else {
+    matchLock = true;
+    setTimeout(function () { a.classList.remove('flipped'); b.classList.remove('flipped'); matchLock = false; }, 950);
+  }
+}
+document.getElementById('matchReset').addEventListener('click', buildMatch);
+buildMatch();
+
+// ─────────────── 순서 맞추기 (책자 7장) ───────────────
+var ORDER_STEPS = [
+  '🌟 부활 – 모든 사람이 믿을 만한 증거',
+  '📖 부활로 성경의 모든 말씀을 믿는다',
+  '🌑 이 세상은 어둠(죄)이다',
+  '✝️ 복음 – 예수님이 죽고 부활하셔서 우리 주인이 되셨다',
+  '❔ 죄는 예수님을 믿지 않는 것이다',
+  '🙏 회개하고 복음을 믿으라!',
+  '👑 부활의 주께 굴복하라!'
+];
+var orderPool = document.getElementById('orderPool');
+var orderLine = document.getElementById('orderLine');
+var orderStatus = document.getElementById('orderStatus');
+var orderNext = 0;
+function buildOrder() {
+  orderNext = 0; orderLine.innerHTML = ''; orderStatus.textContent = ''; orderPool.innerHTML = '';
+  shuffle(ORDER_STEPS.map(function (s, i) { return { s: s, i: i }; })).forEach(function (item) {
+    var btn = document.createElement('button');
+    btn.className = 'order-item';
+    btn.textContent = item.s;
+    btn.addEventListener('click', function () {
+      if (item.i === orderNext) {
+        var placed = document.createElement('div');
+        placed.className = 'order-item placed';
+        placed.textContent = (orderNext + 1) + '장. ' + item.s;
+        orderLine.appendChild(placed);
+        btn.remove(); orderNext++;
+        if (orderNext === ORDER_STEPS.length) { orderStatus.textContent = '🎉 부활 책자 순서를 완벽하게 기억하고 있네요!'; celebrate(); }
+      } else {
+        btn.classList.add('shake');
+        orderStatus.textContent = '음… 그건 아직 순서가 아니에요! 다시 생각해 봐요 🤔';
+        setTimeout(function () { btn.classList.remove('shake'); }, 400);
+      }
+    });
+    orderPool.appendChild(btn);
+  });
+}
+document.getElementById('orderReset').addEventListener('click', buildOrder);
+buildOrder();
+
+// ─────────────── 주기도문 ───────────────
+var PRAYER = [
+  '하늘에 계신 우리 아버지여',
+  '이름이 거룩히 여김을 받으시오며',
+  '나라이 임하옵시며',
+  '뜻이 하늘에서 이룬 것 같이 땅에서도 이루어지이다',
+  '오늘날 우리에게 일용할 양식을 주옵시고',
+  '우리가 우리에게 죄 지은 자를 사하여 준 것 같이',
+  '우리 죄를 사하여 주옵시고',
+  '우리를 시험에 들게 하지 마옵시고',
+  '다만 악에서 구하옵소서',
+  '나라와 권세와 영광이 아버지께 영원히 있사옵나이다',
+  '아멘'
+];
+var prayBoard = document.getElementById('prayBoard');
+var prayWords = makeWords(PRAYER);
+function drawPray() { drawWords(prayBoard, prayWords, true); }
+document.getElementById('prayHideSome').addEventListener('click', function () { hideSome(prayWords); drawPray(); });
+document.getElementById('prayHideAll').addEventListener('click', function () { prayWords.forEach(function (l) { l.forEach(function (w) { w.hidden = true; }); }); drawPray(); });
+document.getElementById('prayShowAll').addEventListener('click', function () { prayWords.forEach(function (l) { l.forEach(function (w) { w.hidden = false; }); }); drawPray(); });
+drawPray();
+</script>
+</body>
+</html>

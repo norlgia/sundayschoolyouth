@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>복음 퀴즈 편집기 ✏️</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: -apple-system, BlinkMacSystemFont, 'Malgun Gothic', sans-serif; background: #fdf3ee; color: #4a3f35; line-height: 1.5; padding-bottom: 80px; }
+  header { background: linear-gradient(135deg, #ff9a8b, #e55039); color: #fff; padding: 22px 16px; text-align: center; }
+  header h1 { font-size: 1.5rem; }
+  header p { font-size: .95rem; margin-top: 6px; opacity: .95; }
+  main { max-width: 760px; margin: 0 auto; padding: 16px; }
+  .guide { background: #fffbe6; border: 2px dashed #f6b93b; border-radius: 14px; padding: 14px 16px; font-size: .95rem; margin-bottom: 18px; }
+  .guide b { color: #c0392b; }
+  .q-card { background: #fff; border-radius: 16px; box-shadow: 0 3px 10px rgba(0,0,0,.06); padding: 16px; margin-bottom: 16px; border-left: 6px solid #e55039; }
+  .q-top { display: flex; align-items: center; gap: 8px; margin-bottom: 10px; flex-wrap: wrap; }
+  .q-num { font-weight: 700; color: #e55039; font-size: 1.05rem; }
+  .q-type { padding: 4px 8px; border-radius: 8px; border: 2px solid #eeddd1; background: #fffdf8; font-size: .9rem; }
+  .q-del { margin-left: auto; background: #f8d7d2; border: none; color: #c0392b; border-radius: 8px; padding: 6px 12px; cursor: pointer; font-size: .88rem; }
+  label { display: block; font-size: .82rem; color: #8a7a68; margin: 8px 0 4px; }
+  textarea, input[type=text] { width: 100%; border: 2px solid #eeddd1; border-radius: 10px; padding: 10px; font-size: 1rem; font-family: inherit; color: #4a3f35; resize: vertical; }
+  textarea:focus, input:focus { outline: none; border-color: #f6b93b; }
+  .opt-row { display: flex; align-items: center; gap: 8px; margin-bottom: 8px; }
+  .opt-row input[type=radio] { width: 22px; height: 22px; flex-shrink: 0; accent-color: #78e08f; }
+  .opt-row input[type=text] { flex: 1; }
+  .opt-hint { font-size: .78rem; color: #8a7a68; }
+  .correct-badge { font-size: .78rem; color: #2e8b57; font-weight: 700; }
+  .add-btn { display: block; width: 100%; background: #6a89cc; color: #fff; border: none; border-radius: 12px; padding: 14px; font-size: 1rem; cursor: pointer; margin: 8px 0 20px; }
+  .bar { position: fixed; bottom: 0; left: 0; right: 0; background: #fff; border-top: 2px solid #f0ddcf; padding: 12px 16px; display: flex; gap: 10px; justify-content: center; box-shadow: 0 -3px 12px rgba(0,0,0,.08); }
+  .bar button { border: none; border-radius: 12px; padding: 13px 18px; font-size: 1rem; cursor: pointer; font-weight: 700; }
+  .btn-copy { background: #20bf6b; color: #fff; }
+  .btn-preview { background: #f6b93b; color: #5b3a29; }
+  .export-box { max-width: 760px; margin: 0 auto; padding: 0 16px; }
+  #exportArea { width: 100%; min-height: 240px; border: 2px solid #eeddd1; border-radius: 12px; padding: 12px; font-family: monospace; font-size: .85rem; margin-top: 8px; display: none; }
+  .toast { position: fixed; bottom: 80px; left: 50%; transform: translateX(-50%); background: #2e8b57; color: #fff; padding: 12px 20px; border-radius: 12px; font-size: .95rem; opacity: 0; transition: opacity .25s; pointer-events: none; }
+  .toast.show { opacity: 1; }
+</style>
+</head>
+<body>
+<header>
+  <h1>✏️ 복음 퀴즈 편집기</h1>
+  <p>여기서 문제를 자유롭게 고친 뒤, 아래 <b>‘복사하기’</b>를 눌러 저에게 붙여넣어 주세요</p>
+</header>
+
+<main>
+  <div class="guide">
+    <b>사용법</b><br>
+    ① 문제·보기를 자유롭게 고치세요.<br>
+    ② 객관식은 <b>정답 보기 앞의 동그라미</b>를 눌러 정답을 표시하세요.<br>
+    ③ 주관식은 <b>정답</b> 칸에 인정할 답을 쉼표(,)로 여러 개 적어도 돼요. (예: 사망, 죽음)<br>
+    ④ 문제를 지우려면 <b>🗑 삭제</b>, 새로 넣으려면 아래 <b>➕ 문제 추가</b>.<br>
+    ⑤ 다 고쳤으면 맨 아래 <b>📋 복사하기</b> → 저에게 붙여넣기!
+  </div>
+  <div id="list"></div>
+  <button class="add-btn" id="addBtn">➕ 문제 추가</button>
+</main>
+
+<div class="export-box"><textarea id="exportArea" readonly></textarea></div>
+
+<div class="bar">
+  <button class="btn-preview" id="previewBtn">👁 미리보기</button>
+  <button class="btn-copy" id="copyBtn">📋 복사하기</button>
+</div>
+<div class="toast" id="toast"></div>
+
+<script>
+// 현재 index.html 에 들어 있는 퀴즈 20문제
+var QUIZ = [
+  { type: 'mc', q: '하나님이 모든 사람에게 주신, 예수님을 믿을 수 있는 증거는 무엇일까요?', opts: ['예수님의 부활', '멋진 교회 건물', '많은 돈'], a: 0 },
+  { type: 'mc', q: '성경이 말하는 "죄"는 무엇일까요?', opts: ['나쁜 행동을 하는 것', '예수님을 믿지 않는 것', '실수를 하는 것'], a: 1 },
+  { type: 'short', q: '예수님이 태어나신 마을 이름은?', answers: ['베들레헴'] },
+  { type: 'mc', q: '"기독교의 심장"이라고 불리는 것은 무엇일까요?', opts: ['사도 바울', '예수님의 부활', '십자가 목걸이'], a: 1 },
+  { type: 'mc', q: '우리는 어떻게 구원을 얻을까요?', opts: ['착한 일을 아주 많이 해서', '교회에 열심히 나가서', '예수님을 주인으로 믿음으로'], a: 2 },
+  { type: 'mc', q: '예수님의 제자들은 언제 예수님을 진짜로 믿게 되었을까요?', opts: ['태어나자마자', '예수님이 부활하신 후에', '십자가에 죽으셨을 때'], a: 1 },
+  { type: 'short', q: '자기가 주인 된 죄의 대가(값)는 "○○"입니다. ○○에 들어갈 말은?', answers: ['사망', '죽음'] },
+  { type: 'mc', q: '예수님을 마음에 "어떻게" 믿어야 구원을 얻나요?', opts: ['혼내는 분으로', '손님으로', '주인으로'], a: 2 },
+  { type: 'mc', q: '이 세상이 "어둠"이 된 이유는 무엇일까요?', opts: ['밤이 길어져서', '자기가 주인 되어 살아서', '전기가 없어서'], a: 1 },
+  { type: 'mc', q: '회개하고 예수님을 믿는 것은 무엇일까요?', opts: ['내가 스스로 결심한 것', '하나님의 선물', '부모님이 시킨 것'], a: 1 },
+  { type: 'short', q: '예수님을 하나님으로 믿을 수 있는 증거를 써 보세요.', answers: ['부활'] },
+  { type: 'mc', q: '복음은 무엇일까요?', opts: ['재미있는 옛날 이야기', '착하게 사는 방법', '죽고 부활하신 예수님이 우리의 주인 되신 것'], a: 2 },
+  { type: 'mc', q: '회개한 사람은 마음의 주인이 어떻게 바뀔까요?', opts: ["'주(예수님)'에서 '나'로", "'나'에서 '주(예수님)'로", '바뀌지 않아요'], a: 1 },
+  { type: 'mc', q: '다음 중 "복음"을 가장 바르게 설명한 것은?', opts: ['착한 일 열심히 한 사람이 천국 간다는 이야기', '예수님처럼 훌륭하게 살자는 가르침', '죽고 부활하신 예수님이 나의 주인이 되셔서 함께 사는 것'], a: 2 },
+  { type: 'short', q: '복음은 예수님이 우리의 "○○"이 되신 것입니다. ○○을 써 보세요.', answers: ['주인', '주'] },
+  { type: 'mc', q: '🎵 예수님은 어느 마을에서 태어나셨나요?', opts: ['예루살렘', '베들레헴', '나사렛'], a: 1 },
+  { type: 'mc', q: '🎵 예수님과 같은 시대에 다스렸던 로마 황제는 누구일까요?', opts: ['티베리우스', '네로', '알렉산더'], a: 0 },
+  { type: 'short', q: '🎵 만져보기 전까진 못 믿겠다고 한 의심 많은 제자의 이름을 써 보세요.', answers: ['도마'] },
+  { type: 'mc', q: '🎵 교회를 핍박하다가 예수님을 만나 위대한 사도가 된 사람은?', opts: ['다소의 사울(바울)', '가룟 유다', '삭개오'], a: 0 },
+  { type: 'mc', q: '🎵 부활한 예수님을 본 증인은 열두 제자 외에 몇 명이 더 있었나요?', opts: ['오백 명 넘게', '세 명', '아무도 없어요'], a: 0 }
+];
+
+var listEl = document.getElementById('list');
+
+function makeCard(item, idx) {
+  var card = document.createElement('div');
+  card.className = 'q-card';
+  var typeLabel = item.type === 'short' ? '주관식(직접 쓰기)' : '객관식';
+  var html = '';
+  html += '<div class="q-top"><span class="q-num">문제 ' + (idx + 1) + '</span>';
+  html += '<select class="q-type" data-role="type">';
+  html += '<option value="mc"' + (item.type === 'mc' ? ' selected' : '') + '>객관식</option>';
+  html += '<option value="short"' + (item.type === 'short' ? ' selected' : '') + '>주관식</option>';
+  html += '</select>';
+  html += '<button class="q-del" data-role="del">🗑 삭제</button></div>';
+  html += '<label>문제 (질문)</label>';
+  html += '<textarea data-role="q" rows="2">' + escapeHtml(item.q || '') + '</textarea>';
+  html += '<div data-role="body"></div>';
+  card.innerHTML = html;
+  renderBody(card, item);
+
+  card.querySelector('[data-role=type]').addEventListener('change', function () {
+    item.type = this.value;
+    if (item.type === 'mc' && !item.opts) { item.opts = ['', '', '']; item.a = 0; }
+    if (item.type === 'short' && !item.answers) { item.answers = ['']; }
+    renderBody(card, item);
+  });
+  card.querySelector('[data-role=q]').addEventListener('input', function () { item.q = this.value; });
+  card.querySelector('[data-role=del]').addEventListener('click', function () {
+    var i = QUIZ.indexOf(item);
+    if (i > -1) { QUIZ.splice(i, 1); render(); }
+  });
+  return card;
+}
+
+function renderBody(card, item) {
+  var body = card.querySelector('[data-role=body]');
+  body.innerHTML = '';
+  if (item.type === 'short') {
+    var l = document.createElement('label');
+    l.textContent = '정답 (여러 개면 쉼표로, 예: 사망, 죽음)';
+    var inp = document.createElement('input');
+    inp.type = 'text';
+    inp.value = (item.answers || []).join(', ');
+    inp.addEventListener('input', function () {
+      item.answers = this.value.split(',').map(function (s) { return s.trim(); }).filter(function (s) { return s.length; });
+    });
+    body.appendChild(l);
+    body.appendChild(inp);
+    return;
+  }
+  var lab = document.createElement('label');
+  lab.innerHTML = '보기 (정답인 것 앞의 <span class="correct-badge">동그라미</span>를 선택하세요)';
+  body.appendChild(lab);
+  (item.opts || []).forEach(function (opt, oi) {
+    var row = document.createElement('div');
+    row.className = 'opt-row';
+    var radio = document.createElement('input');
+    radio.type = 'radio';
+    radio.name = 'correct-' + QUIZ.indexOf(item);
+    radio.checked = item.a === oi;
+    radio.addEventListener('change', function () { item.a = oi; });
+    var txt = document.createElement('input');
+    txt.type = 'text';
+    txt.value = opt;
+    txt.addEventListener('input', function () { item.opts[oi] = this.value; });
+    row.appendChild(radio);
+    row.appendChild(txt);
+    body.appendChild(row);
+  });
+}
+
+function escapeHtml(s) { return s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;'); }
+
+function render() {
+  listEl.innerHTML = '';
+  QUIZ.forEach(function (item, idx) { listEl.appendChild(makeCard(item, idx)); });
+}
+render();
+
+document.getElementById('addBtn').addEventListener('click', function () {
+  QUIZ.push({ type: 'mc', q: '', opts: ['', '', ''], a: 0 });
+  render();
+  window.scrollTo(0, document.body.scrollHeight);
+});
+
+function buildText() {
+  var out = '===== 복음 퀴즈 (총 ' + QUIZ.length + '문제) =====\n\n';
+  QUIZ.forEach(function (item, idx) {
+    out += '[문제 ' + (idx + 1) + '] ' + (item.type === 'short' ? '(주관식)' : '(객관식)') + '\n';
+    out += 'Q: ' + (item.q || '') + '\n';
+    if (item.type === 'short') {
+      out += '정답: ' + (item.answers || []).join(', ') + '\n';
+    } else {
+      (item.opts || []).forEach(function (o, oi) {
+        out += (oi + 1) + ') ' + o + (item.a === oi ? '   ← 정답' : '') + '\n';
+      });
+    }
+    out += '\n';
+  });
+  return out;
+}
+
+function toast(msg) {
+  var t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  setTimeout(function () { t.classList.remove('show'); }, 1800);
+}
+
+document.getElementById('previewBtn').addEventListener('click', function () {
+  var area = document.getElementById('exportArea');
+  area.value = buildText();
+  area.style.display = 'block';
+  area.scrollIntoView({ behavior: 'smooth' });
+});
+
+document.getElementById('copyBtn').addEventListener('click', function () {
+  var text = buildText();
+  var area = document.getElementById('exportArea');
+  area.value = text;
+  area.style.display = 'block';
+  var done = function () { toast('복사됐어요! 저에게 붙여넣어 주세요 📋'); };
+  if (navigator.clipboard && navigator.clipboard.writeText) {
+    navigator.clipboard.writeText(text).then(done, function () { area.select(); document.execCommand('copy'); done(); });
+  } else {
+    area.select(); document.execCommand('copy'); done();
+  }
+});
+</script>
+</body>
+</html>
