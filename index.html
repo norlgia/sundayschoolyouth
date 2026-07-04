@@ -258,6 +258,28 @@
   .order-slot-label { font-family: 'Jua', sans-serif; color: #8a7a68; margin-top: 18px; }
   .order-status { margin-top: 14px; text-align: center; font-family: 'Jua', sans-serif; font-size: 1.1rem; min-height: 28px; }
 
+  /* ── 찬양 외우기 ── */
+  .song-board {
+    text-align: left;
+    font-size: 1.05rem;
+    line-height: 2;
+  }
+  .song-board .song-line { display: block; }
+  .song-part-title {
+    font-family: 'Jua', sans-serif;
+    font-size: 1.05rem;
+    color: #b08d2f;
+    margin-bottom: 8px;
+    text-align: center;
+  }
+  .song-nav { display: flex; justify-content: space-between; align-items: center; margin-top: 14px; }
+  .song-progress { font-family: 'Jua', sans-serif; color: #8a7a68; }
+  .yt-btn {
+    text-decoration: none;
+    display: inline-block;
+    background: #e55039;
+  }
+
   .confetti { position: fixed; top: -20px; font-size: 1.4rem; animation: fall linear forwards; z-index: 99; pointer-events: none; }
   @keyframes fall { to { transform: translateY(110vh) rotate(720deg); } }
 
@@ -277,6 +299,7 @@
   <button class="tab" data-target="quiz">❓ 복음 퀴즈</button>
   <button class="tab" data-target="match">🃏 짝 맞추기</button>
   <button class="tab" data-target="order">🧩 순서 맞추기</button>
+  <button class="tab" data-target="song">🎵 찬양 외우기</button>
 </nav>
 
 <main>
@@ -344,6 +367,30 @@
       <div class="order-status" id="orderStatus"></div>
       <div style="text-align:center; margin-top:10px;">
         <button class="btn small secondary" id="orderReset">다시 하기 🔄</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- 찬양 외우기 -->
+  <section id="song">
+    <div class="panel">
+      <h2>🎵 찬양 외우기 — 예수는 역사다</h2>
+      <p class="hint">주일예배 때 함께 본 찬양이에요. 예수님이 진짜 역사 속 인물이라는 걸 가사로 배울 수 있어요. 한 절씩 소리 내어 읽고, 단어를 가려 가며 다 외울 때까지 도전!</p>
+      <div style="text-align:center; margin-bottom:14px;">
+        <a class="btn small yt-btn" href="https://youtu.be/rwkXiLz0D3w" target="_blank" rel="noopener">▶ 유튜브에서 찬양 듣기</a>
+      </div>
+      <div class="verse-picker" id="songPicker"></div>
+      <div class="song-part-title" id="songPartTitle"></div>
+      <div class="verse-board song-board" id="songBoard"></div>
+      <div class="verse-controls">
+        <button class="btn small" id="songHideSome">단어 가리기 🙈</button>
+        <button class="btn small" id="songHideAll">전부 가리기 🙉</button>
+        <button class="btn small secondary" id="songShowAll">다시 보기 👀</button>
+      </div>
+      <div class="song-nav">
+        <button class="btn secondary" id="songPrev">◀ 이전 절</button>
+        <div class="song-progress" id="songProgress"></div>
+        <button class="btn" id="songNext">다음 절 ▶</button>
       </div>
     </div>
   </section>
@@ -719,6 +766,177 @@ function buildOrder() {
 }
 document.getElementById('orderReset').addEventListener('click', buildOrder);
 buildOrder();
+
+// ─────────────── 6. 찬양 외우기: 예수는 역사다 ───────────────
+const SONG_PARTS = [
+  {
+    title: '1. 역사적 예수',
+    lines: [
+      '지중해 동남쪽 이스라엘 베들레헴',
+      'B.C 4년에 태어난 역사적 예수',
+      '그 누가 아무리 신화라고 우겨도',
+      '예수는 역사다'
+    ]
+  },
+  {
+    title: '2. 같은 시대의 역사',
+    lines: [
+      '고구려의 유리왕 대무신왕 동시대',
+      '로마의 황제는 티베리우스',
+      '타키투스 연대기에 기록된 예수님',
+      '예수는 역사다'
+    ]
+  },
+  {
+    title: '3. 역사 연표 속 예수님',
+    lines: [
+      '역사 연표 중앙에 나와 있는 예수님',
+      '석가모니 소크라테스 공자 예수님',
+      '4대 성인 중 한 사람 실존 인물 예수님',
+      '예수는 역사다'
+    ]
+  },
+  {
+    title: '4. 부활은 증거다',
+    lines: [
+      '자신이 신이라고 주장했던 예수님',
+      '증거가 없으면 어떻게 믿나',
+      '사도행전 17장 31절 말씀에',
+      '부활은 증거다'
+    ]
+  },
+  {
+    title: '5. 베드로와 도마',
+    lines: [
+      '물 위를 걸었던 베드로',
+      '죽음 앞에 예수를 저주해 버렸네',
+      '의심이 많았던 도마는',
+      '만져보기 전까진 절대 못 믿네'
+    ]
+  },
+  {
+    title: '6. 제자들이 선택한 길',
+    lines: [
+      'But, 환란 고난 핍박',
+      '그들이 선택한 인생을 봐',
+      '내가 내린 결론 이것 뿐',
+      '그들이 보지 못했다면 절대 못 가 그 길을'
+    ]
+  },
+  {
+    title: '7. 다소의 사울',
+    lines: [
+      '다소의 사울 교회의 핍박자에서',
+      '대 사도의 삶',
+      '영원한 것을 보니까',
+      '돈과 명예를 버렸지 다 썩어질 거니까'
+    ]
+  },
+  {
+    title: '8. 오백 명의 증인',
+    lines: [
+      '부활한 예수를 본',
+      '수 많은 증인들은 안 꺾이는 꽃',
+      '열 두 제자를 빼고도 오백 모두 고백',
+      'Risen King My Lord and My God'
+    ]
+  },
+  {
+    title: '9. 부활은 역사다',
+    lines: [
+      '부활이 기록 된 신약성경 복음서',
+      '느낌 감정 환상을 쓰지 않았네',
+      '목격자의 증언집 사복음서 있다면',
+      '부활은 역사다'
+    ]
+  },
+  {
+    title: '10. 예수는 나의 주',
+    lines: [
+      '구약성경 예언대로 사람이 되신 하나님',
+      '성경대로 죽으시고 부활하셨네',
+      '확실한 증거 부활로 모든 말씀 믿으니',
+      '예수는 나의 주'
+    ]
+  }
+];
+
+let songIdx = 0;
+let songLines = [];
+const songPicker = document.getElementById('songPicker');
+const songBoard = document.getElementById('songBoard');
+const songPartTitle = document.getElementById('songPartTitle');
+
+SONG_PARTS.forEach((p, i) => {
+  const b = document.createElement('button');
+  b.className = 'btn small' + (i === 0 ? ' on' : '');
+  b.textContent = i + 1;
+  b.addEventListener('click', () => { songIdx = i; renderSong(); });
+  songPicker.appendChild(b);
+});
+
+function renderSong() {
+  songLines = SONG_PARTS[songIdx].lines.map(line =>
+    line.split(' ').map(w => ({ word: w, hidden: false }))
+  );
+  drawSong();
+}
+
+function drawSong() {
+  const part = SONG_PARTS[songIdx];
+  songPartTitle.textContent = '🎤 ' + part.title;
+  [...songPicker.children].forEach((c, j) => c.classList.toggle('on', j === songIdx));
+  songBoard.innerHTML = '';
+  songLines.forEach(lineWords => {
+    const lineEl = document.createElement('span');
+    lineEl.className = 'song-line';
+    lineWords.forEach(w => {
+      const span = document.createElement('span');
+      span.className = 'word' + (w.hidden ? ' hidden-word' : '');
+      span.textContent = w.word;
+      if (w.hidden) {
+        span.title = '살짝 보기';
+        span.addEventListener('click', () => {
+          span.classList.add('peeked');
+          span.classList.remove('hidden-word');
+          setTimeout(() => {
+            if (w.hidden) {
+              span.classList.remove('peeked');
+              span.classList.add('hidden-word');
+            }
+          }, 1200);
+        });
+      }
+      lineEl.appendChild(span);
+      lineEl.appendChild(document.createTextNode(' '));
+    });
+    songBoard.appendChild(lineEl);
+  });
+  document.getElementById('songProgress').textContent = `${songIdx + 1} / ${SONG_PARTS.length}절`;
+  document.getElementById('songPrev').style.visibility = songIdx === 0 ? 'hidden' : 'visible';
+  document.getElementById('songNext').textContent = songIdx === SONG_PARTS.length - 1 ? '처음부터 🔄' : '다음 절 ▶';
+}
+
+document.getElementById('songHideSome').addEventListener('click', () => {
+  const flat = [];
+  songLines.forEach(line => line.forEach(w => { if (!w.hidden) flat.push(w); }));
+  shuffle(flat).slice(0, Math.max(1, Math.ceil(flat.length / 4))).forEach(w => w.hidden = true);
+  drawSong();
+});
+document.getElementById('songHideAll').addEventListener('click', () => {
+  songLines.forEach(line => line.forEach(w => w.hidden = true));
+  drawSong();
+});
+document.getElementById('songShowAll').addEventListener('click', () => {
+  songLines.forEach(line => line.forEach(w => w.hidden = false));
+  drawSong();
+});
+document.getElementById('songPrev').addEventListener('click', () => { songIdx = Math.max(0, songIdx - 1); renderSong(); });
+document.getElementById('songNext').addEventListener('click', () => {
+  songIdx = songIdx === SONG_PARTS.length - 1 ? 0 : songIdx + 1;
+  renderSong();
+});
+renderSong();
 </script>
 </body>
 </html>
